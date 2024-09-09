@@ -1,0 +1,87 @@
+:root {
+    --primary-color: #f18585;
+    --link-color: #5fb7ff;
+    --dark-color: #313131;
+}
+
+body{
+    margin: 0;
+    background-color: var(--primary-color);
+    flex-direction: column;
+}
+    
+body, .main, nav, ul, .main-content {
+    display: flex;
+}
+    
+nav {
+    background-color: var(--dark-color);
+    width: 100%;
+    height: min-content;
+    padding:5px 0 5px 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+li {
+    list-style-type: none;
+}
+
+li > a {
+    color: var(--link-color);
+    padding: 0 10px 0 10px;
+    text-decoration: none;
+}
+
+li:first-child {
+    padding: 0px;
+    width: 60%;
+}
+
+li:last-child {
+    padding: 0 20px 0 10px;
+}
+
+.main {
+    justify-content: center;
+    margin: 50px 0 50px 0;
+    flex-direction: column;
+    align-items: center;
+} 
+
+.search {
+    width: 50vw;
+    outline: var(--dark-color) 2.5px solid;
+    border-radius: 7px;
+}
+
+#search {
+    width: 100%;
+    border: none;
+    border-radius: 7px;
+    height: 25px;
+}
+
+.main-content {
+    margin: 100px 0 0 0;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    gap: 50px;
+    justify-content: center;
+}
+
+.main-content > div {
+    width: 25%;
+    height: 200px;
+    min-width: 150px;
+    background-color: var(--dark-color);
+    border-radius: 15px;
+    border: #5fb7ff solid 5px;
+}

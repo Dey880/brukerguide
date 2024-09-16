@@ -1,17 +1,26 @@
 :root {
     --primary-color: #f18585;
+    --dark-primary: #a83c3c;
     --link-color: #5fb7ff;
     --dark-color: #313131;
+}
+
+.noscroll {
+    overflow-y: hidden;
+}
+
+body, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons {
+    display: flex;
+}
+
+.grid-container {
+    display: grid;
 }
 
 body{
     margin: 0;
     background-color: var(--primary-color);
     flex-direction: column;
-}
-    
-body, .main, nav, ul, .main-content {
-    display: flex;
 }
     
 nav {
@@ -40,6 +49,7 @@ li > a {
 }
 
 li:first-child {
+    flex-grow: 1;
     padding: 0px;
     width: 60%;
 }
@@ -55,7 +65,7 @@ li:last-child {
     align-items: center;
 } 
 
-.search {
+.search-div {
     width: 50vw;
     outline: var(--dark-color) 2.5px solid;
     border-radius: 7px;
@@ -77,11 +87,103 @@ li:last-child {
     justify-content: center;
 }
 
-.main-content > div {
-    width: 25%;
-    height: 200px;
+.main-content > a > div {
+    width: 500px;
+    height: 250px;
     min-width: 150px;
     background-color: var(--dark-color);
     border-radius: 15px;
     border: #5fb7ff solid 5px;
+}
+
+
+#login-content {
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+#login-main {
+    background-color: var(--dark-color);
+    border-radius: 15px;
+    height: 500px;
+    width: 600px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#login-text {
+    color: var(--primary-color);
+}
+
+#login-input > div > h1 {
+    color: var(--link-color)
+}
+
+#login-buttons {
+    margin: 50px 0 0 0;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.styled-button {
+    display: inline-block;
+    width: 6em;
+    height: 38px;
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 6px;
+    position: relative;
+    border: solid #0f0f0f;
+}
+
+.styled-button::before {
+    position: absolute;
+    content: "";
+    background: var(--primary-color);
+    width: 150px;
+    height: 200px;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.styled-button:hover {
+    color: white;
+    transition: 0.3;
+}
+
+#left:before {
+    bottom: 100%;
+    right: 100%;
+    transition: 0.3s;
+}
+
+#right:before {
+    top: 100%;
+    left: 100%;
+    transition: 0.3s;
+}
+
+#left:hover::before {
+    bottom: -30px;
+    right: -30px;
+}
+
+#right:hover::before {
+    top: -30px;
+    left: -30px;
+}
+
+.login {
+    border-radius: 5px;
+    border: solid  #0f0f0f;
+}
+
+.grid-container {
+    grid-template-columns: repeat(5, 1fr);
+    
 }

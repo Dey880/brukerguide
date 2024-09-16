@@ -18,6 +18,10 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
+app.post("/login", (req, res) => {
+    console.log("LOGGER UT HER", req.body);
+})
+
 app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });

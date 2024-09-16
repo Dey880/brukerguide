@@ -119,7 +119,7 @@ li:last-child {
     color: var(--primary-color);
 }
 
-#login-input > div > h1 {
+#login-input > h1 {
     color: var(--link-color)
 }
 
@@ -154,6 +154,7 @@ li:last-child {
 .styled-button:hover {
     color: white;
     transition: 0.3;
+    cursor: pointer;
 }
 
 #left:before {
@@ -184,6 +185,32 @@ li:last-child {
 }
 
 .grid-container {
-    grid-template-columns: repeat(5, 1fr);
-    
+    grid-template-columns: 1fr 4fr;
+    gap: 10px;
+    height: 100vh;
+}
+
+#side {
+    background-color: var(--dark-color);
+    color: var(--link-color);
+    padding-left: 20px;
+    height: 100vh;
+}
+
+#guide-content {
+    background-color: var(--primary-color);
+    padding: 20px;
+    grid-column: 2;
+    overflow-y: scroll;
+}
+
+#back {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: xx-large;
+}
+
+#side > div > a {
+    color: var(--link-color);
+    text-decoration: none;
 }

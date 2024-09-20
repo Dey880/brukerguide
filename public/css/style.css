@@ -9,7 +9,7 @@
     overflow-y: hidden;
 }
 
-body, #side, #side-links, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons {
+body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons {
     display: flex;
 }
 
@@ -93,7 +93,7 @@ li:last-child {
     min-width: 150px;
     background-color: var(--dark-color);
     border-radius: 15px;
-    border: #5fb7ff solid 5px;
+    border: var(--link-color) solid 5px;
 }
 
 
@@ -206,11 +206,22 @@ li:last-child {
     font-size: xx-large;
 }
 
-#side > div > a {
+#side-links > div > a {
     color: var(--link-color);
     text-decoration: none;
 }
 
-#side-links {
+#side-links, #top, #bottom {
     flex-direction: column;
 }
+
+#side-links {
+    justify-content: space-between;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+#bottom {
+    padding: 0 0 20px 0;
+}
+

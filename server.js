@@ -2,24 +2,24 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-// const Schema = mongoose.Schema();
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {
     console.log("Mongodb connected!")
   }).catch((error) => {
-    console.log("something happened");
+    console.log("something happened", error);
   })
 
-  const userschema =  new mongoose.Schema({
-    email: String,
-    password: String
-  });
+const userschema =  new mongoose.Schema({
+  email: String,
+  password: String
+});
 
+const User = mongoose.model("User", userschema);
 
-  const User = mongoose.model("User", userschema);
-  
+const saltRounds = 10;
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -35,7 +35,26 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log("LOGGER UT HER", req.body);
+  // console.log("LOGGER UT HER", req.body);  // LOGS PASSWORDS
+  const { brukernavn, password } = req.body;
+
+  User.findOne({email:brukernavn}).then((user) => {
+    console.log("resultat", user)
+
+    bcrypt.compare(password, user.password).then((result) => {
+      if(result) {
+        res.status(200).redirect("/dashboard")
+      }
+    })
+
+    if(user.password == password) {
+      res.status()
+    }
+  }).catch((error) => {
+    console.log("Error", error)
+    res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
+  })
+
 });
 
 app.get("/createuser", (req, res) => {
@@ -43,18 +62,24 @@ app.get("/createuser", (req, res) => {
 });
 
 app.post("/createuser", async (req, res) => {
-  console.log("LOGGER UT HER", req.body);
-  const {login, password, repeatPassword} = req.body;
+  // console.log("LOGGER UT HER", req.body); // LOGS PASSWORDS
+  const {brukernavn, password, repeatPassword} = req.body;
 
   if(password == repeatPassword){
-    let newUser =  new  User({email:login, password:password})
-    const result= await  newUser.save();
 
-    console.log(result);
+    bcrypt.hash(password, saltRounds, async function(error, hash) {
 
-    if(result._id) {
-      res.status(200).redirect("/login");
-    }
+      let newUser =  new  User({email:brukernavn, password:hash})
+      const result= await  newUser.save();
+  
+      console.log(result);
+  
+      if(result._id) {
+        res.status(200).redirect("/login");
+      }
+    })
+  } else {
+    res.status(500).json({message:"Passord stemmer ikke overens"})
   }
 });
 

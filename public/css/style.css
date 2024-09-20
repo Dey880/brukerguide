@@ -9,7 +9,7 @@
     overflow-y: hidden;
 }
 
-body, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons {
+body, #side, #side-links, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons {
     display: flex;
 }
 
@@ -119,15 +119,9 @@ li:last-child {
     color: var(--primary-color);
 }
 
-#login-input > h1 {
-    color: var(--link-color)
-}
-
-#login-buttons {
-    margin: 50px 0 0 0;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
+#login-input > div > h1 {
+    color: var(--link-color);
+    margin: 0 0 20px 0;
 }
 
 .styled-button {
@@ -182,6 +176,7 @@ li:last-child {
 .login {
     border-radius: 5px;
     border: solid  #0f0f0f;
+    margin: 0 0 20px 0;
 }
 
 .grid-container {
@@ -195,6 +190,7 @@ li:last-child {
     color: var(--link-color);
     padding-left: 20px;
     height: 100vh;
+    flex-direction: column;
 }
 
 #guide-content {
@@ -213,4 +209,8 @@ li:last-child {
 #side > div > a {
     color: var(--link-color);
     text-decoration: none;
+}
+
+#side-links {
+    flex-direction: column;
 }

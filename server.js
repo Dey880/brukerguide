@@ -15,13 +15,45 @@ mongoose
   })
 
 
-const uploads = multer({ dest: "uploads/"});
+// const uploads = multer({ dest: "uploads/"});
+const diskStorage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./uploads")
+  },
+  filename: function(req, file, cb) {
+    const ext = path.extname(file.originalname);
+    console.log("EXT", ext)
+    // if(ext !== ".png" && ext !== ".jpg") {
+    //   return cb(new Error("Only .PNG files allowed"))
+    // }
+
+    console.log(file, "BASE");
+    // const fileName = file.originalname + ".png"
+    const fileName = file.originalname
+    cb(null, fileName)
+
+  }
+})
+
+
+const uploads = multer({
+  storage: diskStorage
+})
 
 const userschema =  new mongoose.Schema({
   email: String,
   password: String
 });
 
+const brukerSchema = new mongoose.Schema({
+  tittel: String,
+  tag: String,
+  overskrift: Array,
+  beskrivelse: Array,
+  bilde: Array
+})
+
+const BrukerGuide = mongoose.model("BrukerGuide", brukerSchema)
 const User = mongoose.model("User", userschema);
 
 const saltRounds = 10;
@@ -100,9 +132,16 @@ app.get("/nyGuide", (req, res) => {
   res.render("nyGuide")
 })
 
-app.post("/nyGuide", uploads.single("Bilde"), (req, res) => {
+app.post("/nyGuide", uploads.array("Bilde"), async (req, res) => {
   console.log("BODY", req.body)
-  console.log("FILE", req.file)
+  console.log("FILE", req.files)
+  
+  const newBrukerGuide = new BrukerGuide({ 
+    tittel: req.body.tittel, 
+    tag: req.body.tag,
+    overskrift: req.body.overskrift, 
+    beskrivelse: req.body.beskrivelse })
+    const result = await newBrukerGuide.save();
 })
 
 app.listen(process.env.PORT);

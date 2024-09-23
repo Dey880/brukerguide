@@ -14,6 +14,9 @@ mongoose
     console.log("something happened", error);
   })
 
+
+const uploads = multer({ dest: "uploads/"});
+
 const userschema =  new mongoose.Schema({
   email: String,
   password: String
@@ -97,8 +100,9 @@ app.get("/nyGuide", (req, res) => {
   res.render("nyGuide")
 })
 
-app.post("/nyGuide", (req, res) => {
-  console.log(req.body)
+app.post("/nyGuide", uploads.single("Bilde"), (req, res) => {
+  console.log(req.body, "BODY")
+  console.log(req.file, "FILE")
 })
 
 app.listen(process.env.PORT);

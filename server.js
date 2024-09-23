@@ -101,8 +101,8 @@ app.get("/nyGuide", (req, res) => {
 })
 
 app.post("/nyGuide", uploads.single("Bilde"), (req, res) => {
-  console.log(req.body, "BODY")
-  console.log(req.file, "FILE")
+  console.log("BODY", req.body)
+  console.log("FILE", req.file)
 })
 
 app.listen(process.env.PORT);

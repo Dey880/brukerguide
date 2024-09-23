@@ -1,0 +1,53 @@
+<%- include("./partials/head") %>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/guide">Guide</a></li>
+        </ul>
+    </nav>
+    <h1>Ny Guide</h1>
+    <div id="ny-guide-form">
+        <form action="" method="POST" id="guide-form">
+            <h3>Tittel</h3>
+            <input type="text" name="Tittel" id="" placeholder="Tittel" required>
+            <h3>Tag</h3>
+            <input type="text" name="Tag" id="" placeholder="Tag" required>
+            <div id="addNewSection">
+                <div name="section">
+                    <h2>Seksjon</h2>
+                    <h3>Overskrift</h3>
+                    <input type="text" name="Overskrift" id="" placeholder="Overskrift" required>
+                    <h3>Beskrivelse</h3>
+                    <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required>
+                    <h3>Bilde</h3>
+                    <input type="file" name="Bilde" id="">
+                </div>
+            </div>
+            <button type="submit" id="new-guide-button">Send Inn</button>
+        </form>
+    </div>
+    <button onclick="lagNySeksjon()" id="ny-seksjon">Ny Seksjon</button>
+
+    <script>
+
+        function lagNySeksjon() {
+
+            let newSection = document.getElementById("addNewSection");
+            newSection.innerHTML += `
+            <div>
+                <h2>Seksjon</h2>
+                <h3>Overskrift</h3>
+                <input type="text" name="overskrift" id="" placeholder="Overskrift" required>
+                <h3>Beskrivelse</h3>
+                <input type="text" name="overskrift" id="" placeholder="Beskrivelse" required>
+                <h3>Bilde</h3>
+                <input type="file" name="Bilde" id="">
+            </div>
+            `
+        }
+
+    </script>
+    
+</body>

@@ -3,6 +3,8 @@ const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const multer = require("multer")
+const path = require("path")
 
 
 mongoose
@@ -90,5 +92,13 @@ app.get("/dashboard", (req, res) => {
 app.get("/guide", (req, res) => {
   res.render("guide");
 });
+
+app.get("/nyGuide", (req, res) => {
+  res.render("nyGuide")
+})
+
+app.post("/nyGuide", (req, res) => {
+  console.log(req.body)
+})
 
 app.listen(process.env.PORT);

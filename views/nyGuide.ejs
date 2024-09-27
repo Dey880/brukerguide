@@ -12,19 +12,19 @@
         <div id="ny-guide-form">
             <form action="" method="POST" id="guide-form" enctype="multipart/form-data">
                 <h3>Tittel</h3>
-                <input type="text" name="Tittel" id="" placeholder="Tittel" required autocomplete="off">
+                <input type="text" name="Tittel" id="" placeholder="Tittel" required autocomplete="off" class="guide-input">
                 <h3>Tag</h3>
-                <input type="text" name="Tag" id="" placeholder="Tag" required autocomplete="off">
+                <input type="text" name="Tag" id="" placeholder="Tag" required autocomplete="off" class="guide-input">
                 <div id="addNewSection">
                     <div name="section">
                         <h2>Seksjon</h2>
                         <div>
                             <h3>Overskrift</h3>
-                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off">
+                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off" class="guide-input">
                         </div>
                         <div>
                             <h3>Beskrivelse</h3>
-                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off">
+                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off" class="guide-input">
                         </div>
                         <div>
                             <h3>Bilde</h3>
@@ -67,16 +67,17 @@
         function lagNySeksjon() {
 
             let newSection = document.getElementById("addNewSection");
-            newSection.innerHTML += `
+            newSection.innerHTML += 
+            `
                     <div name="section">
                         <h2>Seksjon</h2>
                         <div>
                             <h3>Overskrift</h3>
-                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off">
+                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off" class="guide-input">
                         </div>
                         <div>
                             <h3>Beskrivelse</h3>
-                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off">
+                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off" class="guide-input">
                         </div>
                         <div>
                             <h3>Bilde</h3>

@@ -466,6 +466,7 @@ li:last-child {
     border: solid 2px var(--dark-color);
     border-radius: 12px;
     padding: 15px;
+    width: 35vw;
 }
 
 #ny-guide-1 {
@@ -576,4 +577,11 @@ li:last-child {
 
 #ny-seksjon:hover i:nth-child(10) {
     transition-delay: calc(0.045s * 10);
+}
+
+.guide-input {
+    border-radius: 5px;
+    border: solid  var(--black-color);
+    margin: 0 0 20px 0;
+    width: 50%;
 }

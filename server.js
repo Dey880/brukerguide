@@ -14,7 +14,7 @@ mongoose
     console.log("something happened", error);
   })
 
-
+  
 // const uploads = multer({ dest: "uploads/"});
 const diskStorage = multer.diskStorage({
   destination: function(req, file, cb) {

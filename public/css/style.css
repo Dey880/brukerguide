@@ -11,7 +11,7 @@
     overflow-y: hidden;
 }
 
-body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form {
+body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex {
     display: flex;
 }
 
@@ -24,7 +24,11 @@ body{
     background-color: var(--primary-color);
     flex-direction: column;
 }
-    
+
+#side-links, #top, #bottom {
+    flex-direction: column;
+}
+
 nav {
     background-color: var(--dark-color);
     width: 100%;
@@ -97,7 +101,6 @@ li:last-child {
     border-radius: 15px;
     border: var(--link-color) solid 5px;
 }
-
 
 #login-content {
     justify-content: center;
@@ -213,10 +216,6 @@ li:last-child {
     text-decoration: none;
 }
 
-#side-links, #top, #bottom {
-    flex-direction: column;
-}
-
 #side-links {
     justify-content: space-between;
     height: 100vh;
@@ -225,6 +224,14 @@ li:last-child {
 
 #bottom {
     padding: 0 0 20px 0;
+}
+
+#top {
+    justify-content: space-between;
+}
+
+#top > a {
+    padding: 5px 0 5px 0;
 }
 
 #new-guide {
@@ -236,7 +243,6 @@ li:last-child {
     padding: 0 20px;
     font-size: 18px;
     text-transform: uppercase;
-    border: 0;
     box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
     background-color: #5fb7ff;
     border-radius: 12px;
@@ -352,6 +358,99 @@ li:last-child {
     transition-delay: calc(0.045s * 16);
 }
 
+#new-guide-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    margin: 10px 0 0 0;
+    padding: 0 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
+    background-color: #5fb7ff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 31ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#new-guide-new:before {
+    content: attr(alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #313131;
+    letter-spacing: 4px;
+    opacity: 1;
+}
+   
+#new-guide-new:active {
+    box-shadow: none;
+    transform: translateY(7px);
+    transition: 35ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#new-guide-new:hover:before {
+    transition: all .0s;
+    transform: translateY(100%);
+    opacity: 0;
+}
+   
+#new-guide-new i {
+    color: #313131;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-style: normal;
+    transition: all 2s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+   
+#new-guide-new:hover i {
+    transition: all .2s ease;
+    transform: translateY(0px);
+    opacity: 1;
+}
+   
+
+#new-guide-new:hover i:nth-child(1) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#new-guide-new:hover i:nth-child(2) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#new-guide-new:hover i:nth-child(3) {
+    transition-delay: calc(0.045s * 3);
+}
+
+#new-guide-new:hover i:nth-child(4) {
+    transition-delay: calc(0.045s * 4);
+}
+
+#new-guide-new:hover i:nth-child(5) {
+    transition-delay: calc(0.045s * 5);
+}
+
+#new-guide-new:hover i:nth-child(6) {
+    transition-delay: calc(0.045s * 6);
+}
+
+#new-guide-new:hover i:nth-child(7) {
+    transition-delay: calc(0.045s * 7);
+}
+
+#new-guide-new:hover i:nth-child(8) {
+    transition-delay: calc(0.045s * 8);
+}
+
 #nostyle {
     text-decoration: none;
 }
@@ -361,20 +460,120 @@ li:last-child {
     align-items: center;
 }
 
-#ny-seksjon {
-    padding: 0 5px 0 5px;
-    width: min-content;
-    height: min-content;
-    background-color: var(--link-color);
-}
-
 #guide-form {
-    background-color: var(--link-color);
+    background-color: var(--dark-color);
+    color: var(--primary-color);
     border: solid 2px var(--dark-color);
     border-radius: 12px;
     padding: 15px;
 }
 
-#new-guide-button {
-    margin: 5px 0 0 0;
+#ny-guide-1 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex {
+    justify-content: center;
+    align-items: center;
+}
+
+#ny-seksjon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    padding: 0 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
+    background-color: #5fb7ff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 31ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#ny-seksjon:before {
+    content: attr(alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #313131;
+    letter-spacing: 4px;
+    opacity: 1;
+}
+   
+#ny-seksjon:active {
+    box-shadow: none;
+    transform: translateY(7px);
+    transition: 35ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#ny-seksjon:hover:before {
+    transition: all .0s;
+    transform: translateY(100%);
+    opacity: 0;
+}
+   
+#ny-seksjon i {
+    color: #313131;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-style: normal;
+    transition: all 2s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+   
+#ny-seksjon:hover i {
+    transition: all .2s ease;
+    transform: translateY(0px);
+    opacity: 1;
+}
+   
+#ny-seksjon:hover i:nth-child(1) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#ny-seksjon:hover i:nth-child(2) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#ny-seksjon:hover i:nth-child(3) {
+    transition-delay: calc(0.045s * 3);
+}
+
+#ny-seksjon:hover i:nth-child(4) {
+    transition-delay: calc(0.045s * 4);
+}
+
+#ny-seksjon:hover i:nth-child(5) {
+    transition-delay: calc(0.045s * 5);
+}
+
+#ny-seksjon:hover i:nth-child(6) {
+    transition-delay: calc(0.045s * 6);
+}
+
+#ny-seksjon:hover i:nth-child(7) {
+    transition-delay: calc(0.045s * 7);
+}
+
+#ny-seksjon:hover i:nth-child(8) {
+    transition-delay: calc(0.045s * 8);
+}
+
+#ny-seksjon:hover i:nth-child(9) {
+    transition-delay: calc(0.045s * 9);
+}
+
+#ny-seksjon:hover i:nth-child(10) {
+    transition-delay: calc(0.045s * 10);
 }

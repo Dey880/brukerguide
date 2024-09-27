@@ -7,28 +7,60 @@
             <li><a href="/guide">Guide</a></li>
         </ul>
     </nav>
-    <h1>Ny Guide</h1>
-    <div id="ny-guide-form">
-        <form action="" method="POST" id="guide-form" enctype="multipart/form-data">
-            <h3>Tittel</h3>
-            <input type="text" name="Tittel" id="" placeholder="Tittel" required autocomplete="off">
-            <h3>Tag</h3>
-            <input type="text" name="Tag" id="" placeholder="Tag" required autocomplete="off">
-            <div id="addNewSection">
-                <div name="section">
-                    <h2>Seksjon</h2>
-                    <h3>Overskrift</h3>
-                    <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off">
-                    <h3>Beskrivelse</h3>
-                    <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off">
-                    <h3>Bilde</h3>
-                    <input type="file" name="Bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg">
+    <div id="ny-guide-1">
+        <h1 id="ny-guide">Ny Guide</h1>
+        <div id="ny-guide-form">
+            <form action="" method="POST" id="guide-form" enctype="multipart/form-data">
+                <h3>Tittel</h3>
+                <input type="text" name="Tittel" id="" placeholder="Tittel" required autocomplete="off">
+                <h3>Tag</h3>
+                <input type="text" name="Tag" id="" placeholder="Tag" required autocomplete="off">
+                <div id="addNewSection">
+                    <div name="section">
+                        <h2>Seksjon</h2>
+                        <div>
+                            <h3>Overskrift</h3>
+                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off">
+                        </div>
+                        <div>
+                            <h3>Beskrivelse</h3>
+                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off">
+                        </div>
+                        <div>
+                            <h3>Bilde</h3>
+                            <input type="file" name="Bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <button type="submit" id="new-guide-button">Send Inn</button>
-        </form>
+                <div class="flex">
+                    <button type="submit" id="new-guide-new" alt="Send Inn">
+                        <i>S</i>
+                        <i>E</i>
+                        <i>N</i>
+                        <i>D</i>
+                        <i>&nbsp;</i>
+                        <i>I</i>
+                        <i>N</i>
+                        <i>N</i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-    <button onclick="lagNySeksjon()" id="ny-seksjon">Ny Seksjon</button>
+    <div class="flex">
+        <button onclick="lagNySeksjon()" id="ny-seksjon" alt="NY SEKSJON" id="border">
+            <i>N</i>
+            <i>Y</i>
+            <i>&nbsp;</i>
+            <i>S</i>
+            <i>E</i>
+            <i>K</i>
+            <i>S</i>
+            <i>J</i>
+            <i>O</i>
+            <i>N</i>
+        </button>
+    </div>
 
     <script>
 
@@ -36,15 +68,21 @@
 
             let newSection = document.getElementById("addNewSection");
             newSection.innerHTML += `
-            <div>
-                <h2>Seksjon</h2>
-                <h3>Overskrift</h3>
-                <input type="text" name="overskrift" id="" placeholder="Overskrift" required autocomplete="off">
-                <h3>Beskrivelse</h3>
-                <input type="text" name="overskrift" id="" placeholder="Beskrivelse" required autocomplete="off">
-                <h3>Bilde</h3>
-                <input type="file" name="Bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg">
-            </div>
+                    <div name="section">
+                        <h2>Seksjon</h2>
+                        <div>
+                            <h3>Overskrift</h3>
+                            <input type="text" name="Overskrift" id="" placeholder="Overskrift" required autocomplete="off">
+                        </div>
+                        <div>
+                            <h3>Beskrivelse</h3>
+                            <input type="text" name="Beskrivelse" id="" placeholder="Beskrivelse" required autocomplete="off">
+                        </div>
+                        <div>
+                            <h3>Bilde</h3>
+                            <input type="file" name="Bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex">
+                        </div>
+                    </div>
             `
         }
 

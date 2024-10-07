@@ -135,14 +135,26 @@ app.get("/nyGuide", (req, res) => {
 
 app.post("/nyGuide", uploads.array("Bilde"), async (req, res) => {
   console.log("BODY", req.body)
-  console.log("FILE", req.files)
+  console.log("FILES", req.files)
+
+  const { tittel, tag, overskrift, beskrivelse } = req.body;
+
+  const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
+  const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+
+  const bildeArray = req.files.map(file => file.path);
+
   
   const newBrukerGuide = new BrukerGuide({ 
-    tittel: req.body.tittel, 
-    tag: req.body.tag,
-      overskrift: req.body.overskrift, 
-      beskrivelse: req.body.beskrivelse })
+    tittel, 
+    tag,
+    overskrift: overskriftArray, 
+    beskrivelse: beskrivelseArray,
+    bilde: bildeArray
+  });
+  
   const result = await newBrukerGuide.save();
-})
+  res.status(200).redirect("/dashboard");
+});
 
 app.listen(process.env.PORT);

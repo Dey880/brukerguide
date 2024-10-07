@@ -38,8 +38,15 @@ const diskStorage = multer.diskStorage({
 
 
 const uploads = multer({
-  storage: diskStorage
-})
+  storage: diskStorage,
+  fileFilter: function (req, file, cb) {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error("Only .png .jpg and .jpeg format allowed"));
+    }
+    cb(null, true);
+  }
+});
 
 const userschema =  new mongoose.Schema({
   email: String,
@@ -134,27 +141,32 @@ app.get("/nyGuide", (req, res) => {
 });
 
 app.post("/nyGuide", uploads.any(), async (req, res) => {
-  console.log("BODY", req.body)
-  console.log("FILES", req.files)
+  try {
 
-  const { tittel, tag, overskrift, beskrivelse } = req.body;
+    console.log("BODY", req.body)
+    console.log("FILES", req.files)
+    
+    const { tittel, tag, overskrift, beskrivelse } = req.body;
+    
+    const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
+    const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
 
-  const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
-  const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+    const bildeArray = req.files.map(file => file.path);
 
-  const bildeArray = req.files.map(file => file.path);
+    
+    const newBrukerGuide = new BrukerGuide({ 
+      tittel, 
+      tag,
+      overskrift: overskriftArray, 
+      beskrivelse: beskrivelseArray,
+      bilde: bildeArray
+    });
 
-  
-  const newBrukerGuide = new BrukerGuide({ 
-    tittel, 
-    tag,
-    overskrift: overskriftArray, 
-    beskrivelse: beskrivelseArray,
-    bilde: bildeArray
+    const result = await newBrukerGuide.save();
+    res.status(200).redirect("/dashboard");
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
   });
-
-  const result = await newBrukerGuide.save();
-  res.status(200).redirect("/dashboard");
-});
 
 app.listen(process.env.PORT);

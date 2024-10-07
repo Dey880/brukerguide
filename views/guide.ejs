@@ -10,21 +10,31 @@
                 </div>
                 <div id="side-links">
                     <div id="top">
-                        <a href=""></a>
+                        <% if (guides.length > 0) { %>
+                            <a href="#top-guide">Top</a>
+                            <% guides.forEach(guide => { %>
+                                <!-- Link to each guide using its unique ID as an anchor -->
+                                <a href="#guide-<%= guide._id %>" class="guide-item-link"><%= guide.tittel %></a>
+                                <% }) %>
+                        <% } else { %>
+                            <p>Ingen guider funnet</p>
+                        <% } %>
                     </div>
                     <div id="bottom">
                         <a href="/">Home</a>
                         <a href="/login">Login</a>
+                        <a href="/nyGuide">Ny Guide</a>
                     </div>
-                </div>
+                </div>                
             </div>
       
             <div id="guide-content">
-                <h1>Guides</h1>
+                <h1 id="top-guide">Guides</h1>
                 <% if (guides.length > 0) { %>
                     <div class="guides-list">
                         <% guides.forEach(guide => { %>
-                            <div class="guide-item">
+                            <!-- Add an ID to each guide div so it can be referenced by the link -->
+                            <div class="guide-item" id="guide-<%= guide._id %>">
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
                                 <p><strong>Tag:</strong> <%= guide.tag %></p>
                                 <% guide.overskrift.forEach((heading, index) => { %>

@@ -71,19 +71,6 @@ li:last-child {
     align-items: center;
 } 
 
-.search-div {
-    width: 50vw;
-    outline: var(--dark-color) 2.5px solid;
-    border-radius: 7px;
-}
-
-#search {
-    width: 100%;
-    border: none;
-    border-radius: 7px;
-    height: 25px;
-}
-
 .main-content {
     margin: 100px 0 0 0;
     flex-wrap: wrap;
@@ -767,4 +754,26 @@ h2 {
 
 .guide-h2 {
     color: black;
+}
+
+#top-guide {
+    margin: 0;
+}
+
+.search-div {
+    width: 50%;
+}
+
+#search {
+    width: 100%;
+    height: 35px;
+    border-radius: 15px 0 0 15px;
+    border: var(--dark-color) 3px solid;
+}
+
+#search-button {
+    height: 35px;
+    background-color: var(--dark-color);
+    color: var(--primary-color);
+    border: var(--dark-color) 2px solid;
 }

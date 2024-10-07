@@ -66,9 +66,20 @@ app.use(express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-res.render("index");
+app.get("/", async (req, res) => {
+  try {
+    const searchQuery = req.query.search || "";  // Get the search query from the URL
+    const guides = await BrukerGuide.find({
+      tittel: { $regex: searchQuery, $options: "i" }  // Search by title (case-insensitive)
+    });
+    res.render("index", { guides, searchQuery });  // Pass the guides and search query to index.ejs
+  } catch (error) {
+    console.error("Error fetching guides", error);
+    res.status(500).send("Error fetching guides");
+  }
 });
+
+
 
 app.get("/login", (req, res) => {
 res.render("login");
@@ -127,15 +138,24 @@ app.get("/dashboard", (req, res) => {
 res.render("dashboard");
 });
 
-app.get("/guide", async (req, res) => {
-try {
-  const guides = await BrukerGuide.find();
-  res.render("guide", { guides });
-} catch (error) {
-  console.error("Error fetching guides", error);
-  res.status(500).send("Error fetching guides")
-}
+app.get("/guide/:id?", async (req, res) => {
+  try {
+    const guides = req.params.id 
+      ? [await BrukerGuide.findById(req.params.id)]  // If ID is provided, fetch only that guide
+      : await BrukerGuide.find();  // Otherwise, fetch all guides
+
+    if (!guides || guides.length === 0 || !guides[0]) {
+      res.render("guide", { guides: [] });  // Pass an empty array to the guide.ejs page
+    } else {
+      res.render("guide", { guides });  // Pass the fetched guides to the view
+    }
+  } catch (error) {
+    console.error("Error fetching guides", error);
+    res.status(500).send("Error fetching guides");
+  }
 });
+
+
 
 app.get("/nyGuide", (req, res) => {
 res.render("nyGuide")

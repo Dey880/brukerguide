@@ -7,6 +7,7 @@ const multer = require("multer")
 const path = require("path")
 
 
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {
     console.log("Mongodb connected!")
@@ -14,7 +15,7 @@ mongoose
     console.log("something happened", error);
   })
 
-  
+
 // const uploads = multer({ dest: "uploads/"});
 const diskStorage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -139,9 +140,9 @@ app.post("/nyGuide", uploads.array("Bilde"), async (req, res) => {
   const newBrukerGuide = new BrukerGuide({ 
     tittel: req.body.tittel, 
     tag: req.body.tag,
-    overskrift: req.body.overskrift, 
-    beskrivelse: req.body.beskrivelse })
-    const result = await newBrukerGuide.save();
+      overskrift: req.body.overskrift, 
+      beskrivelse: req.body.beskrivelse })
+  const result = await newBrukerGuide.save();
 })
 
 app.listen(process.env.PORT);

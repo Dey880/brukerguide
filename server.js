@@ -9,51 +9,50 @@ const path = require("path")
 
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {
-    console.log("Mongodb connected!")
-  }).catch((error) => {
-    console.log("something happened", error);
-  })
+.connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {
+  console.log("Mongodb connected!")
+}).catch((error) => {
+  console.log("something happened", error);
+})
 
 
-// const uploads = multer({ dest: "uploads/"});
 const diskStorage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./public/uploads")
-  },
-  filename: function(req, file, cb) {
-    const ext = path.extname(file.originalname);
-    console.log("EXT", ext)
-    console.log(file, "BASE");
-    const fileName = file.originalname
-    cb(null, fileName)
+destination: function(req, file, cb) {
+  cb(null, "./public/uploads")
+},
+filename: function(req, file, cb) {
+  const ext = path.extname(file.originalname);
+  console.log("EXT", ext)
+  console.log(file, "BASE");
+  const fileName = file.originalname
+  cb(null, fileName)
 
-  }
+}
 })
 
 
 const uploads = multer({
-  storage: diskStorage,
-  fileFilter: function (req, file, cb) {
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error("Only .png .jpg and .jpeg format allowed"));
-    }
-    cb(null, true);
+storage: diskStorage,
+fileFilter: function (req, file, cb) {
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+  if (!allowedTypes.includes(file.mimetype)) {
+    return cb(new Error("Only .png .jpg and .jpeg format allowed"));
   }
+  cb(null, true);
+}
 });
 
 const userschema =  new mongoose.Schema({
-  email: String,
-  password: String
+email: String,
+password: String
 });
 
 const brukerSchema = new mongoose.Schema({
-  tittel: String,
-  tag: String,
-  overskrift: Array,
-  beskrivelse: Array,
-  bilde: Array
+tittel: String,
+tag: String,
+overskrift: Array,
+beskrivelse: Array,
+bilde: Array
 })
 
 const BrukerGuide = mongoose.model("BrukerGuide", brukerSchema)
@@ -68,119 +67,106 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.render("index");
+res.render("index");
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+res.render("login");
 });
 
 app.post("/login", (req, res) => {
-  // console.log("LOGGER UT HER", req.body);  // LOGS PASSWORDS
-  const { brukernavn, password } = req.body;
+// console.log("LOGGER UT HER", req.body);  // LOGS PASSWORDS
+const { brukernavn, password } = req.body;
 
-  User.findOne({email:brukernavn}).then((user) => {
-    console.log("resultat", user)
+User.findOne({email:brukernavn}).then((user) => {
+  console.log("resultat", user)
 
-    bcrypt.compare(password, user.password).then((result) => {
-      if(result) {
-        res.status(200).redirect("/dashboard")
-      }
-    })
-
-    if(user.password == password) {
-      res.status()
+  bcrypt.compare(password, user.password).then((result) => {
+    if(result) {
+      res.status(200).redirect("/dashboard")
     }
-  }).catch((error) => {
-    console.log("Error", error)
-    res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
   })
+
+  if(user.password == password) {
+    res.status()
+  }
+}).catch((error) => {
+  console.log("Error", error)
+  res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
+})
 
 });
 
 app.get("/createuser", (req, res) => {
-  res.render("createuser");
+res.render("createuser");
 });
 
 app.post("/createuser", async (req, res) => {
-  // console.log("LOGGER UT HER", req.body); // LOGS PASSWORDS
-  const {brukernavn, password, repeatPassword} = req.body;
+// console.log("LOGGER UT HER", req.body); // LOGS PASSWORDS
+const {brukernavn, password, repeatPassword} = req.body;
 
-  if(password == repeatPassword){
+if(password == repeatPassword){
 
-    bcrypt.hash(password, saltRounds, async function(error, hash) {
+  bcrypt.hash(password, saltRounds, async function(error, hash) {
 
-      let newUser =  new  User({email:brukernavn, password:hash})
-      const result= await  newUser.save();
-  
-      console.log(result);
-  
-      if(result._id) {
-        res.status(200).redirect("/login");
-      }
-    })
-  } else {
-    res.status(500).json({message:"Passord stemmer ikke overens"})
-  }
-});
+    let newUser =  new  User({email:brukernavn, password:hash})
+    const result= await  newUser.save();
 
-app.get("/dashboard", async (req, res) => {
-  try {
-    const guides = await BrukerGuide.find();
-    res.render("dashboard", { guides });
-  } catch (error) {
-    console.error("Error fetching guides:", error);
-    res.status(500).send("Internal Server Error")
-  }
-});
+    console.log(result);
 
-app.get("/guide/:id", async (req, res) => {
-  try {
-    const guideId = req.params.id;
-    const guide = await BrukerGuide.findById(guideId);
-
-    if (!guide) {
-      return res.status(404).send("Guide not found");
+    if(result._id) {
+      res.status(200).redirect("/login");
     }
+  })
+} else {
+  res.status(500).json({message:"Passord stemmer ikke overens"})
+}
+});
 
-    res.render("guide", { guide });
-  } catch (error) {
-    console.error("Error fetching guides:", error);
-    res.status(500).send("Internal Server Error");
-  }
+app.get("/dashboard", (req, res) => {
+res.render("dashboard");
+});
+
+app.get("/guide", async (req, res) => {
+try {
+  const guides = await BrukerGuide.find();
+  res.render("guide", { guides });
+} catch (error) {
+  console.error("Error fetching guides", error);
+  res.status(500).send("Error fetching guides")
+}
 });
 
 app.get("/nyGuide", (req, res) => {
-  res.render("nyGuide")
+res.render("nyGuide")
 });
 
 app.post("/nyGuide", uploads.any(), async (req, res) => {
-  try {
+try {
 
-    console.log("BODY", req.body)
-    console.log("FILES", req.files)
-    
-    const { tittel, tag, overskrift, beskrivelse } = req.body;
-    
-    const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
-    const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+  console.log("BODY", req.body)
+  console.log("FILES", req.files)
 
-    const bildeArray = req.files.map(file => file.path.replace("public", ""));
-console.log(bildeArray, req.files);
-    
-    const newBrukerGuide = new BrukerGuide({ 
-      tittel, 
-      tag,
-      overskrift: overskriftArray, 
-      beskrivelse: beskrivelseArray,
-      bilde: bildeArray
-    });
+  const { tittel, tag, overskrift, beskrivelse } = req.body;
 
-    const result = await newBrukerGuide.save();
-    res.status(200).redirect("/guide");
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+  const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
+  const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+
+  const bildeArray = req.files.map(file => file.path.replace("public", ""));
+
+  const newBrukerGuide = new BrukerGuide({ 
+    tittel, 
+    tag,
+    overskrift: overskriftArray, 
+    beskrivelse: beskrivelseArray,
+    bilde: bildeArray
   });
+
+  const result = await newBrukerGuide.save();
+  res.status(200).redirect("/guide");
+} catch (error) {
+  res.status(400).json({ message: error.message });
+}
+});
 
 app.listen(process.env.PORT);

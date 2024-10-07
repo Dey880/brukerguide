@@ -131,9 +131,9 @@ app.get("/guide", (req, res) => {
 
 app.get("/nyGuide", (req, res) => {
   res.render("nyGuide")
-})
+});
 
-app.post("/nyGuide", uploads.array("Bilde"), async (req, res) => {
+app.post("/nyGuide", uploads.any(), async (req, res) => {
   console.log("BODY", req.body)
   console.log("FILES", req.files)
 
@@ -152,7 +152,7 @@ app.post("/nyGuide", uploads.array("Bilde"), async (req, res) => {
     beskrivelse: beskrivelseArray,
     bilde: bildeArray
   });
-  
+
   const result = await newBrukerGuide.save();
   res.status(200).redirect("/dashboard");
 });

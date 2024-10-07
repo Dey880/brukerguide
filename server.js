@@ -134,7 +134,7 @@ app.get("/dashboard", async (req, res) => {
   }
 });
 
-app.get("/guide:id", async (req, res) => {
+app.get("/guide/:id", async (req, res) => {
   try {
     const guideId = req.params.id;
     const guide = await BrukerGuide.findById(guideId);

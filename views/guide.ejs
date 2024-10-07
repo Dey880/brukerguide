@@ -11,7 +11,7 @@
                 <div id="side-links">
                     <div id="top">
                         <% guides.forEach(guide => { %>
-                            <a href="/guide/<% guide._id %>"><% guide.tittel  %></a>
+                            <a href="/guide/<%= guide._id %>"><% guide.tittel  %></a>
                         <% });  %>
                     </div>
                     <div id="bottom">

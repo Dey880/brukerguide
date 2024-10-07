@@ -764,3 +764,7 @@ h2 {
     color: var(--primary-color);
     margin: 0;
 }
+
+.guide-h2 {
+    color: black;
+}

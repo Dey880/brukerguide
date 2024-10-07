@@ -19,17 +19,12 @@ mongoose
 // const uploads = multer({ dest: "uploads/"});
 const diskStorage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./uploads")
+    cb(null, "./public/uploads")
   },
   filename: function(req, file, cb) {
     const ext = path.extname(file.originalname);
     console.log("EXT", ext)
-    // if(ext !== ".png" && ext !== ".jpg") {
-    //   return cb(new Error("Only .PNG files allowed"))
-    // }
-
     console.log(file, "BASE");
-    // const fileName = file.originalname + ".png"
     const fileName = file.originalname
     cb(null, fileName)
 
@@ -68,6 +63,7 @@ const saltRounds = 10;
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -128,12 +124,30 @@ app.post("/createuser", async (req, res) => {
   }
 });
 
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+app.get("/dashboard", async (req, res) => {
+  try {
+    const guides = await BrukerGuide.find();
+    res.render("dashboard", { guides });
+  } catch (error) {
+    console.error("Error fetching guides:", error);
+    res.status(500).send("Internal Server Error")
+  }
 });
 
-app.get("/guide", (req, res) => {
-  res.render("guide");
+app.get("/guide:id", async (req, res) => {
+  try {
+    const guideId = req.params.id;
+    const guide = await BrukerGuide.findById(guideId);
+
+    if (!guide) {
+      return res.status(404).send("Guide not found");
+    }
+
+    res.render("guide", { guide });
+  } catch (error) {
+    console.error("Error fetching guides:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/nyGuide", (req, res) => {
@@ -151,8 +165,8 @@ app.post("/nyGuide", uploads.any(), async (req, res) => {
     const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
     const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
 
-    const bildeArray = req.files.map(file => file.path);
-
+    const bildeArray = req.files.map(file => file.path.replace("public", ""));
+console.log(bildeArray, req.files);
     
     const newBrukerGuide = new BrukerGuide({ 
       tittel, 
@@ -163,7 +177,7 @@ app.post("/nyGuide", uploads.any(), async (req, res) => {
     });
 
     const result = await newBrukerGuide.save();
-    res.status(200).redirect("/dashboard");
+    res.status(200).redirect("/guide");
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

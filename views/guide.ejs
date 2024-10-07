@@ -10,10 +10,9 @@
                 </div>
                 <div id="side-links">
                     <div id="top">
-                        <a href="">ting1</a>
-                        <a href="">ting1</a>
-                        <a href="">ting1</a>
-                        <a href="">ting1</a>
+                        <% guides.forEach(guide => { %>
+                            <a href="/guide/<% guide._id %>"><% guide.tittel  %></a>
+                        <% });  %>
                     </div>
                     <div id="bottom">
                         <a href="/">Home</a>
@@ -21,8 +20,33 @@
                     </div>
                 </div>
             </div>
+      
             <div id="guide-content">
-                
+                <h1>Guides</h1>
+                <% if (guides.length > 0) { %>
+                    <div class="guides-list">
+                        <% guides.forEach(guide => { %>
+                            <div class="guide-item">
+                                <h2 class="guide-h2"><%= guide.tittel %></h2>
+                                <p><strong>Tag:</strong> <%= guide.tag %></p>
+                                <% guide.overskrift.forEach((heading, index) => { %>
+                                    <h3><%= heading %></h3>
+                                    <p><%= guide.beskrivelse[index] %></p>
+                                <% }); %>
+                                <% if (guide.bilde.length > 0) { %>
+                                    <h3>Bilder:</h3>
+                                    <div class="guide-images">
+                                        <% guide.bilde.forEach(image => { %>
+                                            <img src="<%= image %>" alt="Guide Image" class="guide-image">
+                                        <% }); %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p>Ingen guider funnet.</p>
+                <% } %>
             </div>
         </div>
     </div>

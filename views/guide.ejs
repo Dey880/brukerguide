@@ -32,7 +32,6 @@
                 <% if (guides.length > 0) { %>
                     <div class="guides-list">
                         <% guides.forEach(guide => { %>
-                            <!-- Add an ID to each guide div so it can be referenced by the link -->
                             <div class="guide-item" id="guide-<%= guide._id %>">
                                 <h2 class="guide-h2"><%= guide.author %></h2>
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
@@ -49,9 +48,10 @@
                                         <% }); %>
                                     </div>
                                 <% } %>
+                                <a href="/editGuide/<%= guide._id %>">Edit</a> <!-- Edit link -->
                             </div>
                         <% }); %>
-                    </div>
+                    </div>                    
                 <% } else { %>
                     <p>Ingen guider funnet.</p>
                 <% } %>

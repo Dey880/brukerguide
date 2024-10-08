@@ -1,4 +1,4 @@
-<%- include("./parials/head") %>
+<%- include("./partials/head") %>
 
 <body>
     <nav>
@@ -18,14 +18,28 @@
                 <div id="addNewSection">
                     <% guide.overskrift.forEach((heading, index) => { %>
                         <div name="section">
-                            <h2>section</h2>
+                            <h2>Seksjon</h2>
                             <div>
                                 <h3>Overskrift</h3>
-                                <input type="text" name="overskrift[]" value="<%=heading %>" required autocomplete="off" class="guide-input">
+                                <input type="text" name="overskrift[]" value="<%= heading %>" required autocomplete="off" class="guide-input">
+                            </div>
+                            <div>
+                                <h3>Beskrivelse</h3>
+                                <textarea name="beskrivelse[]" required autocomplete="off" class="guide-beskrivelse"><%= guide.beskrivelse[index] %></textarea>
+                            </div>
+                            <div>
+                                <h3>Bilde</h3>
+                                <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple>
                             </div>
                         </div>
+                    <% }) %>
+                </div>
+                <div class="flex">
+                    <button type="submit" id="edit-guide-submit" alt="Send Inn">Update Guide</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
+
+

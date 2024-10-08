@@ -34,6 +34,7 @@
                         <% guides.forEach(guide => { %>
                             <!-- Add an ID to each guide div so it can be referenced by the link -->
                             <div class="guide-item" id="guide-<%= guide._id %>">
+                                <h2 class="guide-h2"><%= guide.author %></h2>
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
                                 <p><strong>Tag:</strong> <%= guide.tag %></p>
                                 <% guide.overskrift.forEach((heading, index) => { %>

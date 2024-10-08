@@ -49,6 +49,7 @@ password: String
 });
 
 const brukerSchema = new mongoose.Schema({
+author: String,
 tittel: String,
 tag: String,
 overskrift: Array,

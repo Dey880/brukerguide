@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const multer = require("multer")
 const path = require("path")
+const session = require("express-session")
 
 
 
@@ -65,6 +66,12 @@ app.use(express.static("public"));
 app.use(express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
+}));
 
 app.get("/", async (req, res) => {
   try {
@@ -90,11 +97,15 @@ app.post("/login", (req, res) => {
 const { brukernavn, password } = req.body;
 
 User.findOne({email:brukernavn}).then((user) => {
+  if (!user) {
+    return res.status(400).json({ message: "User not found"})
+  }
   console.log("resultat", user)
 
   bcrypt.compare(password, user.password).then((result) => {
     if(result) {
-        res.status(200).redirect("/dashboard")
+      req.session.currentUser = brukernavn;
+      res.status(200).redirect("/dashboard")
     }
   })
 
@@ -171,10 +182,10 @@ try {
 
   const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
   const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
-
   const bildeArray = req.files.map(file => file.path.replace("public", ""));
 
-  const newBrukerGuide = new BrukerGuide({ 
+  const newBrukerGuide = new BrukerGuide({
+    author: req.session.currentUser,
     tittel, 
     tag,
     overskrift: overskriftArray, 

@@ -94,7 +94,7 @@ User.findOne({email:brukernavn}).then((user) => {
 
   bcrypt.compare(password, user.password).then((result) => {
     if(result) {
-      res.status(200).redirect("/dashboard")
+        res.status(200).redirect("/dashboard")
     }
   })
 
@@ -179,7 +179,7 @@ try {
     tag,
     overskrift: overskriftArray, 
     beskrivelse: beskrivelseArray,
-    bilde: bildeArray
+    bilde: bildeArray, 
   });
 
   const result = await newBrukerGuide.save();

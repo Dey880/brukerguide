@@ -67,7 +67,7 @@
         function lagNySeksjon() {
 
             let newSection = document.getElementById("addNewSection");
-            newSection.innerHTML += 
+            newSection.insertAdjacentHTML("beforeend",  
             `
                     <div name="section">
                         <h2>Seksjon</h2>
@@ -84,7 +84,7 @@
                             <input type="file" name="bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex" multiple>
                         </div>
                     </div>
-            `
+            `)
         }
 
     </script>

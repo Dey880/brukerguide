@@ -78,7 +78,7 @@ app.get("/", async (req, res) => {
   try {
     const searchQuery = req.query.search || "";  // Get the search query from the URL
     const guides = await BrukerGuide.find({
-      tittel: { $regex: searchQuery, $options: "i" }  // Search by title (case-insensitive)
+      tag: { $regex: searchQuery, $options: "i" }  // Search by title (case-insensitive)
     });
     res.render("index", { guides, searchQuery });  // Pass the guides and search query to index.ejs
   } catch (error) {

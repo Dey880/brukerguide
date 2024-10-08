@@ -5,7 +5,7 @@
         <div class="main">
                 <div class="search-div">
                     <form action="/" method="GET" class="flex">  <!-- Form to submit the search query -->
-                        <input type="search" name="search" id="search" placeholder="Søk gjennom guider med tittel (case sensitive)" autocomplete="off" value="<%= searchQuery %>">
+                        <input type="search" name="search" id="search" placeholder="Søk gjennom guider med tag (case sensitive)" autocomplete="off" value="<%= searchQuery %>">
                         <button type="submit" id="search-button">SØK</button>
                     </form>
                 </div>
@@ -13,7 +13,7 @@
                 <% if (guides.length > 0) { %>
                     <% guides.forEach(guide => { %>
                         <a href="/guide/<%= guide._id %>">
-                            <div class="guide-link"><%= guide.tittel %></div>
+                            <div class="guide-link"><%= guide.tag %></div>
                         </a>
                     <% }); %>
                 <% } else { %>

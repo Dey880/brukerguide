@@ -201,4 +201,43 @@ try {
 }
 });
 
+app.get("/editGuide/:id", async (req, res) => {
+  try {
+    const guide = await BrukerGuide.findById(req.params.id);
+    if (!guide) {
+      return res.status(404).send("Guide not found");
+    }
+    res.render("editGuide", { guide });
+  } catch (error) {
+    console.error("Error fetching guide for editing", error);
+    res.status(500).send("Error fetching guide");
+  }
+});
+
+app.post("/editGuide/:id", uploads.any(), async (req, res) => {
+  try {
+    const { tittel, tag, overskrift, beskrivelse } = req.body;
+    const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
+    const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+    const bildeArray = req.files ? req.files.map(file => file.path.replace("public", "")) : [];
+
+    const updatedGuide = await BrukerGuide.findByIdAndUpdate(req.params.id, {
+      tittel,
+      tittel,
+      tag,
+      overskrift: overskriftArray,
+      beskrivelse: beskrivelseArray,
+      bilde: bildeArray,
+    }, { new:true });
+
+    if (!updatedGuide) {
+      return res.statud(404).send("Guide not found")
+    }
+    res.status(200).redirect("/guide");
+  } catch (error) {
+    console.error("Error updating guide", error)
+    res.status(400).json({ message: error.message })
+  }
+});
+
 app.listen(process.env.PORT);

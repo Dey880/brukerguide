@@ -1,0 +1,31 @@
+<%- include("./parials/head") %>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/guide">Guide</a></li>
+        </ul>
+    </nav>
+    <div id="edit-guide">
+        <h1>Edit Guide</h1>
+        <div id="edit-guide-form">
+            <form action="/editGuide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
+                <h3>Tittel</h3>
+                <input type="text" name="tittel" value="<%= guide.tittel %>" required autocomplete="off" class="guide-input">
+                <h3>Tag</h3>
+                <input type="text" name="tag" value="<%= guide.tag %>" required autocomplete="off" class="guide-input">
+                <div id="addNewSection">
+                    <% guide.overskrift.forEach((heading, index) => { %>
+                        <div name="section">
+                            <h2>section</h2>
+                            <div>
+                                <h3>Overskrift</h3>
+                                <input type="text" name="overskrift[]" value="<%=heading %>" required autocomplete="off" class="guide-input">
+                            </div>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

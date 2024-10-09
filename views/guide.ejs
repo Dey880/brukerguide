@@ -10,14 +10,7 @@
                 </div>
                 <div id="side-links">
                     <div id="top">
-                        <% if (guides.length > 0) { %>
-                            <a href="#top-guide">Top</a>
-                            <% guides.forEach(guide => { %>
-                                <a href="#guide-<%= guide._id %>" class="guide-item-link"><%= guide.tittel %></a>
-                                <% }) %>
-                        <% } else { %>
-                            <p>Ingen guider funnet</p>
-                        <% } %>
+                        <!-- CODE HERE -->
                     </div>
                     <div id="bottom">
                         <a href="/">Home</a>
@@ -38,15 +31,9 @@
                                 <% guide.overskrift.forEach((heading, index) => { %>
                                     <h3><%= heading %></h3>
                                     <p><%= guide.beskrivelse[index] %></p>
+                                    <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>
-                                <% if (guide.bilde.length > 0) { %>
-                                    <h3>Bilder:</h3>
-                                    <div class="guide-images">
-                                        <% guide.bilde.forEach(image => { %>
-                                            <img src="<%= image %>" alt="Guide Image" class="guide-image">
-                                        <% }); %>
                                     </div>
-                                <% } %>
                                 <a href="/editGuide/<%= guide._id %>">Edit</a> <!-- Edit link -->
                             </div>
                         <% }); %>

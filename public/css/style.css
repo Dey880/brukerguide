@@ -15,7 +15,7 @@ body {
     overflow-y: hidden;
 }
 
-body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex {
+body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex, #search-type {
     display: flex;
 }
 

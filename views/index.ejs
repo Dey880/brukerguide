@@ -5,6 +5,14 @@
         <div class="main">
                 <div class="search-div">
                     <form action="/" method="GET" class="flex">  <!-- Form to submit the search query -->
+                        <div id="search-type">
+                            <label>
+                                <input type="radio" name="searchType" value="tag" <%= searchType === "tag" ? "checked" : "" %>> Tag
+                            </label>
+                            <label>
+                                <input type="radio" name="searchType" value="title" <%= searchType === "title" ? "checked" : "" %>> Tittel
+                            </label>
+                        </div>
                         <input type="search" name="search" id="search" placeholder="Søk gjennom guider med tag (case sensitive)" autocomplete="off" value="<%= searchQuery %>">
                         <button type="submit" id="search-button">SØK</button>
                     </form>

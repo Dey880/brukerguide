@@ -76,10 +76,17 @@ app.use(session({
 app.get("/", async (req, res) => {
   try {
     const searchQuery = req.query.search || "";  // Get the search query from the URL
-    const guides = await BrukerGuide.find({
-      tag: { $regex: searchQuery, $options: "i" }  // Search by title (case-insensitive)
-    });
-    res.render("index", { guides, searchQuery });  // Pass the guides and search query to index.ejs
+    const searchType = req.query.searchType || "tag";
+
+    const query = {};
+    if (searchType == "tag") {
+      query.tag = { $regex: searchQuery, $options: "i" };
+    } else if (searchType === "title") {
+      query.tittel = { $regex: searchQuery, $options: "i" };
+    }
+
+    const guides = await BrukerGuide.find(query);
+    res.render("index", { guides, searchQuery, searchType });  // Pass the guides and search query to index.ejs
   } catch (error) {
     console.error("Error fetching guides", error);
     res.status(500).send("Error fetching guides");

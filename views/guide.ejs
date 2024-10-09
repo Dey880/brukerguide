@@ -1,5 +1,5 @@
 <%- include("./partials/head") %>
-
+ 
 <body>
     <!-- <%- include("./partials/nav") %> -->
     <div class="main-guide"> 
@@ -10,7 +10,17 @@
                 </div>
                 <div id="side-links">
                     <div id="top">
-                        <!-- CODE HERE -->
+                        <% if (guides.length > 0) { %> <!-- Added missing parentheses -->
+                            <% guides.forEach(guide => { %>
+                                <% if (guide.overskrift && guide.overskrift.length > 0) { %>
+                                    <% guide.overskrift.forEach((heading, index) => { %>
+                                        <a href="#guide-<%= guide._id %>-<%= index %>"><%= heading %></a><br> <!-- Fixed this line -->
+                                    <% }); %>
+                                <% } else { %>
+                                    <p>No headings found</p>
+                                <% } %>
+                            <% }); %> <!-- Closed forEach properly -->
+                        <% } %> <!-- Closed if statement properly -->
                     </div>
                     <div id="bottom">
                         <a href="/">Home</a>
@@ -18,7 +28,7 @@
                     </div>
                 </div>                
             </div>
-      
+ 
             <div id="guide-content">
                 <h1 id="top-guide">Guides</h1>
                 <% if (guides.length > 0) { %>
@@ -29,13 +39,12 @@
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
                                 <p><strong>Tag:</strong> <%= guide.tag %></p>
                                 <% guide.overskrift.forEach((heading, index) => { %>
-                                    <h3><%= heading %></h3>
+                                    <h3 id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3> <!-- Fixed this line -->
                                     <p><%= guide.beskrivelse[index] %></p>
                                     <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>
-                                    </div>
-                                <a href="/editGuide/<%= guide._id %>">Edit</a> <!-- Edit link -->
                             </div>
+                            <a href="/editGuide/<%= guide._id %>">Edit</a> <!-- Edit link -->
                         <% }); %>
                     </div>                    
                 <% } else { %>
@@ -45,3 +54,4 @@
         </div>
     </div>
 </body>
+ 

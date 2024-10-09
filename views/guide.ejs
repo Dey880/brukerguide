@@ -13,7 +13,6 @@
                         <% if (guides.length > 0) { %>
                             <a href="#top-guide">Top</a>
                             <% guides.forEach(guide => { %>
-                                <!-- Link to each guide using its unique ID as an anchor -->
                                 <a href="#guide-<%= guide._id %>" class="guide-item-link"><%= guide.tittel %></a>
                                 <% }) %>
                         <% } else { %>

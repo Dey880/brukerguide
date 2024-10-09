@@ -90,7 +90,7 @@ li:last-child {
     min-width: 150px;
     background-color: var(--dark-color);
     border-radius: 15px;
-    border: var(--link-color) solid 5px;
+    border: var(--black-color) solid 5px;
 }
 
 #login-content {
@@ -785,4 +785,13 @@ h2 {
 
 textarea {
     font-family: Arial, Helvetica, sans-serif
+}
+
+.guide-link > h2{
+    margin: 5px;
+    color: var(--link-color);
+}
+
+.main-content > a{
+    text-decoration: none;
 }

@@ -176,16 +176,16 @@ app.get("/dashboard", authenticateJWT, async (req, res) => {
   }
 });
 
-app.get("/guide/:id?", async (req, res) => {
+app.get("/guide/:id?", authenticateJWT, async (req, res) => {
   try {
     const guides = req.params.id 
       ? [await BrukerGuide.findById(req.params.id)]
       : await BrukerGuide.find();
 
     if (!guides || guides.length === 0 || !guides[0]) {
-      res.render("guide", { guides: [] });
+      res.render("guide", { guides: [], user: req.user || null });
     } else {
-      res.render("guide", { guides });
+      res.render("guide", { guides, user: req.user || null });
     }
   } catch (error) {
     console.error("Error fetching guides", error);

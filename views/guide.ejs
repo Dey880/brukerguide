@@ -10,17 +10,17 @@
                 </div>
                 <div id="side-links">
                     <div id="top">
-                        <% if (guides.length > 0) { %> <!-- Added missing parentheses -->
+                        <% if (guides.length > 0) { %>
                             <% guides.forEach(guide => { %>
                                 <% if (guide.overskrift && guide.overskrift.length > 0) { %>
                                     <% guide.overskrift.forEach((heading, index) => { %>
-                                        <a href="#guide-<%= guide._id %>-<%= index %>"><%= heading %></a><br> <!-- Fixed this line -->
+                                        <a href="#guide-<%= guide._id %>-<%= index %>"><%= heading %></a><br>
                                     <% }); %>
                                 <% } else { %>
                                     <p>No headings found</p>
                                 <% } %>
-                            <% }); %> <!-- Closed forEach properly -->
-                        <% } %> <!-- Closed if statement properly -->
+                            <% }); %>
+                        <% } %>
                     </div>
                     <div id="bottom">
                         <a href="/">Home</a>
@@ -39,12 +39,14 @@
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
                                 <p><strong>Tag:</strong> <%= guide.tag %></p>
                                 <% guide.overskrift.forEach((heading, index) => { %>
-                                    <h3 id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3> <!-- Fixed this line -->
+                                    <h3 id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3>
                                     <p><%= guide.beskrivelse[index] %></p>
                                     <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>
                             </div>
-                            <a href="/editGuide/<%= guide._id %>">Edit</a> <!-- Edit link -->
+                            <% if (user && guide.author === user.email) { %>
+                                <a href="/editGuide/<%= guide._id %>">Edit</a>
+                            <% } %>
                         <% }); %>
                     </div>                    
                 <% } else { %>

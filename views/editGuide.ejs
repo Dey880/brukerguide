@@ -1,15 +1,10 @@
 <%- include("./partials/head") %>
 
-<body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-        </ul>
-    </nav>
-    <div id="edit-guide">
-        <h1>Edit Guide</h1>
-        <div id="edit-guide-form">
-            <form action="/editGuide/<%= guide._id %>" method="POST" enctype="multipart/form-data">
+<body>    
+    <div id="ny-guide-1">
+        <h1 id="ny-guide">Edit Guide</h1>
+        <div id="ny-guide-form">
+            <form action="/editGuide/<%= guide._id %>" method="POST" id="guide-form" enctype="multipart/form-data">
                 <h3>Tittel</h3>
                 <input type="text" name="tittel" value="<%= guide.tittel %>" required autocomplete="off" class="guide-input">
                 <h3>Tag</h3>
@@ -29,18 +24,87 @@
                             <div>
                                 <h3>Bilde</h3>
                                 <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple>
+                                <p id="prevImage">previous image:</p>
                             </div>
                         </div>
                     <% }) %>
                 </div>
-                <div class="flex">
-                    <button type="submit" id="edit-guide-submit" alt="Send Inn">Update Guide</button>
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div class="flex">
+                        <button type="submit" id="new-guide-new" alt="Send Inn">
+                            <i>S</i>
+                            <i>E</i>
+                            <i>N</i>
+                            <i>D</i>
+                            <i>&nbsp;</i>
+                            <i>I</i>
+                            <i>N</i>
+                            <i>N</i>
+                        </button>
+                    </div>
                 </div>
-                <button onclick="window.history.back();">cancel</button>
             </form>
+            <div id="edit-button">
+                <div class="flex">
+                    <button onclick="window.history.back();" id="new-guide-new" alt="Cancel">
+                        <i>C</i>
+                        <i>A</i>
+                        <i>N</i>
+                        <i>C</i>
+                    <i>E</i>
+                    <i>L</i>
+                </button>
+            </div>
+            <div class="flex">
+                <button onclick="lagNySeksjon()" id="ny-seksjon" alt="NY SEKSJON" id="border" class="ny-seksjon">
+                    <i>N</i>
+                    <i>Y</i>
+                    <i>&nbsp;</i>
+                    <i>S</i>
+                    <i>E</i>
+                    <i>K</i>
+                    <i>S</i>
+                    <i>J</i>
+                    <i>O</i>
+                    <i>N</i>
+                </button>
+            </div>
+        </div>
             </a>
         </div>
     </div>
 </body>
 
+<script>
 
+    let imagePathsElement = document.getElementById("prevImage")
+    
+    guide.bilde.forEach(path => {
+        let textNode = document.createTextNode(path + "");
+        imagePathsElement.appendChild(textNode);
+    });
+
+    function lagNySeksjon() {
+        
+        let newSection = document.getElementById("addNewSection");
+        newSection.insertAdjacentHTML("beforeend",  
+        `
+        <div name="section">
+                    <h2>Seksjon</h2>
+                    <div>
+                        <h3>Overskrift</h3>
+                        <input type="text" name="overskrift[]" id="" placeholder="Overskrift" required autocomplete="off" class="guide-input">
+                    </div>
+                    <div>
+                        <h3>Beskrivelse</h3>
+                        <textarea name="beskrivelse[]" id="" placeholder="Beskrivelse" required autocomplete="off" class="guide-beskrivelse"></textarea>
+                    </div>
+                    <div>
+                        <h3>Bilde</h3>
+                        <input type="file" name="bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex" multiple>
+                    </div>
+                </div>
+        `)
+    }
+
+</script>

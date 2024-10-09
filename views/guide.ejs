@@ -6,7 +6,7 @@
         <div class="grid-container">
             <div id="side">
                 <div>
-                    <a href="/" id="back">&larr;</a>
+                    <a onclick="window.history.back();" id="back">&larr;</a>
                 </div>
                 <div id="side-links">
                     <div id="top">
@@ -14,7 +14,7 @@
                             <% guides.forEach(guide => { %>
                                 <% if (guide.overskrift && guide.overskrift.length > 0) { %>
                                     <% guide.overskrift.forEach((heading, index) => { %>
-                                        <a href="#guide-<%= guide._id %>-<%= index %>"><%= heading %></a><br>
+                                        <a href="#guide-<%= guide._id %>-<%= index %>"><strong><%= heading %></strong></a><br>
                                     <% }); %>
                                 <% } else { %>
                                     <p>No headings found</p>
@@ -22,30 +22,45 @@
                             <% }); %>
                         <% } %>
                     </div>
-                    <div id="bottom">
-                        <a href="/">Home</a>
-                        <a href="/login">Login</a>
-                    </div>
                 </div>                
             </div>
  
             <div id="guide-content">
-                <h1 id="top-guide">Guides</h1>
+                <h1 id="top-guide">Guide</h1>
                 <% if (guides.length > 0) { %>
                     <div class="guides-list">
                         <% guides.forEach(guide => { %>
                             <div class="guide-item" id="guide-<%= guide._id %>">
-                                <h2 class="guide-h2"><%= guide.author %></h2>
+                                <h2 class="guide-h2">
+                                    <strong>Author: </strong>
+                                    <%= guide.author %>
+                                </h2>
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
-                                <p><strong>Tag:</strong> <%= guide.tag %></p>
+                                <p class="guide-p">
+                                    <strong>Tags: </strong> 
+                                    <%= guide.tag %>
+                                </p>
                                 <% guide.overskrift.forEach((heading, index) => { %>
-                                    <h3 id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3>
-                                    <p><%= guide.beskrivelse[index] %></p>
+                                    <h3 class="guide-h3" id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3>
+                                    <p class="guide-p"><%= guide.beskrivelse[index] %></p>
                                     <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>
                             </div>
                             <% if (user && guide.author === user.email) { %>
-                                <a href="/editGuide/<%= guide._id %>">Edit</a>
+                                <a href="/editGuide/<%= guide._id %>"  id="nostyle">
+                                    <button id="ny-seksjon" alt="Edit guide">
+                                        <i>E</i>
+                                        <i>D</i>
+                                        <i>I</i>
+                                        <i>T</i>
+                                        <i>&nbsp;</i>
+                                        <i>G</i>
+                                        <i>U</i>
+                                        <i>I</i>
+                                        <i>D</i>
+                                        <i>E</i>
+                                    </button>
+                                </a>
                             <% } %>
                         <% }); %>
                     </div>                    

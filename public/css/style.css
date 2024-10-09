@@ -15,7 +15,7 @@ body {
     overflow-y: hidden;
 }
 
-body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex, #search-type {
+body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex, #search-type, .guide-item, .edit-guide, #edit-guide, #edit-button {
     display: flex;
 }
 
@@ -150,6 +150,7 @@ li:last-child {
 
 #back {
     color: var(--link-color);
+    cursor: pointer;
     text-decoration: none;
     font-size: xx-large;
 }
@@ -401,9 +402,11 @@ li:last-child {
 #ny-guide-form {
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #guide-form {
+    margin: 0;
     background-color: var(--dark-color);
     color: var(--primary-color);
     border: solid 2px var(--dark-color);
@@ -797,10 +800,39 @@ textarea {
     text-decoration: none;
 }
 
+.guide-item > img {
+    max-width: 500px;
+}
+
 .guide-item {
+    align-items: center;
+    flex-direction: column;
     margin: 15px;
     padding: 10px;
     border-radius: 15px;
     border: var(--black-color) solid 5px;
     background-color: var(--dark-color);
+}
+
+
+#edit-guide {
+    align-items: center;
+    flex-direction: column;
+}
+
+.ny-seksjon {
+    margin: 20px;
+}
+
+#edit-button {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.guide-h2, .guide-p, .guide-h3 {
+    color: var(--primary-color);
+}
+
+strong {
+    color: var(--link-color);
 }

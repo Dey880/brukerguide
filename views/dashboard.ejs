@@ -8,25 +8,42 @@
     </nav>
     <div class="main"> 
         <h1>Dashboard</h1>
-        <a href="/nyGuide" id="nostyle">
-            <button id="new-guide" alt="CREATE NEW GUIDE">
-                <i>C</i>
-                <i>R</i>
-                <i>E</i>
-                <i>A</i>
-                <i>T</i>
-                <i>E</i>
-                <i>&nbsp;</i>
-                <i>N</i>
-                <i>E</i>
-                <i>W</i>
-                <i>&nbsp;</i>
-                <i>G</i>
-                <i>U</i>
-                <i>I</i>
-                <i>D</i>
-                <i>E</i>
-            </button>
-        </a>
+        <div class="main">
+            <h1>Welcome, <%= user.email %>!</h1>
+            <div class="guides-list">
+                <h2 class="guide-h2">Your Guides</h2>
+                <% if (guides.length > 0) { %>
+                    <% guides.forEach(guide => { %>
+                        <div class="guide-item">
+                            <h3><a href="/guide/<%= guide._id %>"><%= guide.tittel %></a></h3>
+                            <p><strong>Tags:</strong> <%= guide.tag %></p>
+                            <p><strong>Description:</strong> <%= guide.beskrivelse.join(', ') %></p>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>You have not created any guides yet.</p>
+                <% } %>
+            </div>
+            <a href="/nyGuide" id="nostyle">
+                <button id="new-guide" alt="CREATE NEW GUIDE">
+                    <i>C</i>
+                    <i>R</i>
+                    <i>E</i>
+                    <i>A</i>
+                    <i>T</i>
+                    <i>E</i>
+                    <i>&nbsp;</i>
+                    <i>N</i>
+                    <i>E</i>
+                    <i>W</i>
+                    <i>&nbsp;</i>
+                    <i>G</i>
+                    <i>U</i>
+                    <i>I</i>
+                    <i>D</i>
+                    <i>E</i>
+                </button>
+            </a>
+        </div>
     </div>
 </body>

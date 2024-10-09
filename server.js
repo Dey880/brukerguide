@@ -10,9 +10,7 @@ const cookieParser = require("cookie-parser");
 
 
 mongoose
-.connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {
-  console.log("Mongodb connected!")
-}).catch((error) => {
+.connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {}).catch((error) => {
   console.log("something happened", error);
 })
 
@@ -23,8 +21,6 @@ destination: function(req, file, cb) {
 },
 filename: function(req, file, cb) {
   const ext = path.extname(file.originalname);
-  console.log("EXT", ext)
-  console.log(file, "BASE");
   const fileName = file.originalname
   cb(null, fileName)
 
@@ -87,7 +83,7 @@ const authenticateJWT = (req, res, next) => {
 
 app.get("/", async (req, res) => {
   try {
-    const searchQuery = req.query.search || "";  // Get the search query from the URL
+    const searchQuery = req.query.search || "";
     const searchType = req.query.searchType || "tag";
 
     const query = {};
@@ -98,7 +94,7 @@ app.get("/", async (req, res) => {
     }
 
     const guides = await BrukerGuide.find(query);
-    res.render("index", { guides, searchQuery, searchType });  // Pass the guides and search query to index.ejs
+    res.render("index", { guides, searchQuery, searchType });
   } catch (error) {
     console.error("Error fetching guides", error);
     res.status(500).send("Error fetching guides");
@@ -136,7 +132,6 @@ User.findOne({email:brukernavn})
   });
 })
 .catch((error) => {
-  console.log("Error", error)
   res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
 });
 
@@ -171,20 +166,26 @@ if(password == repeatPassword){
 }
 });
 
-app.get("/dashboard", authenticateJWT, (req, res) => {
-res.render("dashboard", { user: req.user });
+app.get("/dashboard", authenticateJWT, async (req, res) => {
+  try {
+    const guides = await BrukerGuide.find({ author: req.user.email});
+    res.render("dashboard", { user: req.user, guides })
+  } catch (error) {
+    console.error("Error fetching guides", error);
+    res.status(500).send("Error fetching guides");
+  }
 });
 
 app.get("/guide/:id?", async (req, res) => {
   try {
     const guides = req.params.id 
-      ? [await BrukerGuide.findById(req.params.id)]  // If ID is provided, fetch only that guide
-      : await BrukerGuide.find();  // Otherwise, fetch all guides
+      ? [await BrukerGuide.findById(req.params.id)]
+      : await BrukerGuide.find();
 
     if (!guides || guides.length === 0 || !guides[0]) {
-      res.render("guide", { guides: [] });  // Pass an empty array to the guide.ejs page
+      res.render("guide", { guides: [] });
     } else {
-      res.render("guide", { guides });  // Pass the fetched guides to the view
+      res.render("guide", { guides });
     }
   } catch (error) {
     console.error("Error fetching guides", error);

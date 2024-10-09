@@ -759,6 +759,7 @@ h2 {
 
 .guide-h2 {
     color: black;
+    text-align: center;
 }
 
 #top-guide {
@@ -794,4 +795,12 @@ textarea {
 
 .main-content > a{
     text-decoration: none;
+}
+
+.guide-item {
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    border: var(--black-color) solid 5px;
+    background-color: var(--dark-color);
 }

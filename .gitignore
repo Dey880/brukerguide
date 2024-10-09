@@ -1,3 +1,7 @@
+# Ignore
 node_modules/
 .env
 /public/uploads/*
+
+# Allow
+!/public/uploads/coconut.jpg

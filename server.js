@@ -3,9 +3,10 @@ const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const multer = require("multer")
-const path = require("path")
-const session = require("express-session")
+const multer = require("multer");
+const path = require("path");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 
 mongoose
@@ -66,12 +67,23 @@ app.use(express.static("public"));
 app.use(express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false }
-}));
+app.use(cookieParser());
+
+const authenticateJWT = (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
 
 app.get("/", async (req, res) => {
   try {
@@ -100,29 +112,33 @@ res.render("login");
 });
 
 app.post("/login", (req, res) => {
-// console.log("LOGGER UT HER", req.body);  // LOGS PASSWORDS
 const { brukernavn, password } = req.body;
 
-User.findOne({email:brukernavn}).then((user) => {
-  if (!user) {
-    return res.status(400).json({ message: "User not found"})
-  }
-  console.log("resultat", user)
+User.findOne({email:brukernavn})
+  .then((user) => {
+    if (!user) {
+      return res.status(400).json({ message: "User not found"})
+    }
 
   bcrypt.compare(password, user.password).then((result) => {
     if(result) {
-      req.session.currentUser = brukernavn;
-      res.status(200).redirect("/dashboard")
-    }
-  })
+      const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-  if(user.password == password) {
-    res.status()
-  }
-}).catch((error) => {
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 3600000,
+      });
+      return res.status(200).redirect("/dashboard");
+    } else {
+      res.status(401).json({ message: "Invalid password" });
+    }
+  });
+})
+.catch((error) => {
   console.log("Error", error)
   res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
-})
+});
 
 });
 
@@ -131,29 +147,32 @@ res.render("createuser");
 });
 
 app.post("/createuser", async (req, res) => {
-// console.log("LOGGER UT HER", req.body); // LOGS PASSWORDS
 const {brukernavn, password, repeatPassword} = req.body;
 
 if(password == repeatPassword){
-
   bcrypt.hash(password, saltRounds, async function(error, hash) {
-
     let newUser =  new  User({email:brukernavn, password:hash})
     const result= await  newUser.save();
 
-    console.log(result);
-
     if(result._id) {
+      const token = jwt.sign({ userId : result._id, email:result.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 3600000,
+      });
+
       res.status(200).redirect("/login");
     }
-  })
+  });
 } else {
   res.status(500).json({message:"Passord stemmer ikke overens"})
 }
 });
 
-app.get("/dashboard", (req, res) => {
-res.render("dashboard");
+app.get("/dashboard", authenticateJWT, (req, res) => {
+res.render("dashboard", { user: req.user });
 });
 
 app.get("/guide/:id?", async (req, res) => {
@@ -179,20 +198,18 @@ app.get("/nyGuide", (req, res) => {
 res.render("nyGuide")
 });
 
-app.post("/nyGuide", uploads.any(), async (req, res) => {
+app.post("/nyGuide", uploads.any(), authenticateJWT, async (req, res) => {
 try {
-
-  console.log("BODY", req.body)
-  console.log("FILES", req.files)
-
   const { tittel, tag, overskrift, beskrivelse } = req.body;
 
   const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
   const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
   const bildeArray = req.files.map(file => file.path.replace("public", ""));
 
+  const authorEmail = req.user.email;
+
   const newBrukerGuide = new BrukerGuide({
-    author: req.session.currentUser,
+    author: authorEmail,
     tittel, 
     tag,
     overskrift: overskriftArray, 

@@ -1,13 +1,9 @@
 <%- include("./partials/head") %>
  <!-- HELP -->
 <body>
-    <!-- <%- include("./partials/nav") %> -->
     <div class="main-guide"> 
         <div class="grid-container">
             <div id="side">
-                <div>
-                    <a onclick="window.history.back();" id="back">&larr;</a>
-                </div>
                 <div id="side-links">
                     <div id="top">
                         <% if (guides.length > 0) { %>
@@ -15,14 +11,18 @@
                                 <% if (guide.overskrift && guide.overskrift.length > 0) { %>
                                     <% guide.overskrift.forEach((heading, index) => { %>
                                         <a href="#guide-<%= guide._id %>-<%= index %>"><strong><%= heading %></strong></a><br>
-                                    <% }); %>
-                                <% } else { %>
-                                    <p>No headings found</p>
-                                <% } %>
-                            <% }); %>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <p>No headings found</p>
+                                    <% } %>
+                                <% }); %>
                         <% } %>
                     </div>
                 </div>                
+                <div id="bottom">
+                    <a href="/dashboard">Dashbord</a>
+                    <a href="/">Hjem</a>
+                </div>
             </div>
  
             <div id="guide-content">
@@ -32,7 +32,7 @@
                         <% guides.forEach(guide => { %>
                             <div class="guide-item" id="guide-<%= guide._id %>">
                                 <h2 class="guide-h2">
-                                    <strong>Author: </strong>
+                                    <strong>Forfatter: </strong>
                                     <%= guide.author %>
                                 </h2>
                                 <h2 class="guide-h2"><%= guide.tittel %></h2>
@@ -48,17 +48,14 @@
                             </div>
                             <% if (user && guide.author === user.email) { %>
                                 <a href="/editGuide/<%= guide._id %>"  id="nostyle">
-                                    <button id="ny-seksjon" alt="Edit guide">
+                                    <button id="ny-seksjon" alt="Rediger">
+                                        <i>R</i>
                                         <i>E</i>
                                         <i>D</i>
                                         <i>I</i>
-                                        <i>T</i>
-                                        <i>&nbsp;</i>
                                         <i>G</i>
-                                        <i>U</i>
-                                        <i>I</i>
-                                        <i>D</i>
                                         <i>E</i>
+                                        <i>R</i>
                                     </button>
                                 </a>
                             <% } %>

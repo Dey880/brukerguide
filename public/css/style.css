@@ -76,7 +76,7 @@ li:last-child {
 } 
 
 .main-content {
-    margin: 100px 0 0 0;
+    margin: 100px 0 50px 0;
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
@@ -167,7 +167,12 @@ li:last-child {
 }
 
 #bottom {
-    padding: 0 0 20px 0;
+    padding: 0 0 20px 0;;
+}
+
+#bottom > a {
+    color: var(--link-color);
+    text-decoration: none;
 }
 
 #top {
@@ -308,12 +313,12 @@ li:last-child {
     justify-content: center;
     height: 50px;
     position: relative;
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
     padding: 0 20px;
     font-size: 18px;
     text-transform: uppercase;
-    box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
-    background-color: #5fb7ff;
+    box-shadow: hsl(120, 87%, 36%) 0px 7px 0px 0px;
+    background-color: #6cff5f;
     border-radius: 12px;
     overflow: hidden;
     transition: 31ms cubic-bezier(.5, .7, .4, 1);
@@ -433,6 +438,7 @@ li:last-child {
     height: 50px;
     position: relative;
     padding: 0 20px;
+    margin: 10px 0 10px 0;
     font-size: 18px;
     text-transform: uppercase;
     box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
@@ -547,7 +553,7 @@ li:last-child {
     justify-content: center;
     height: 50px;
     position: relative;
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
     padding: 0 20px;
     font-size: 18px;
     text-transform: uppercase;
@@ -640,7 +646,7 @@ li:last-child {
     justify-content: center;
     height: 50px;
     position: relative;
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
     padding: 0 20px;
     font-size: 18px;
     text-transform: uppercase;
@@ -747,14 +753,6 @@ li:last-child {
     transition-delay: calc(0.045s * 13);
 }
 
-#CreateUser:hover i:nth-child(14) {
-    transition-delay: calc(0.045s * 14);
-}
-
-#CreateUser:hover i:nth-child(15) {
-    transition-delay: calc(0.045s * 15);
-}
-
 h2 {
     color: var(--primary-color);
     margin: 0;
@@ -820,13 +818,11 @@ textarea {
     flex-direction: column;
 }
 
-.ny-seksjon {
-    margin: 20px;
-}
-
 #edit-button {
+    width: 50%;
+    align-items: center;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .guide-h2, .guide-p, .guide-h3 {
@@ -836,4 +832,207 @@ textarea {
 strong {
     color: var(--link-color);
 }
-/* HELP */
+
+#avbryt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    margin: 10px 0 10px 0;
+    padding: 0 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
+    background-color: #5fb7ff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 31ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#avbryt:before {
+    content: attr(alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #313131;
+    letter-spacing: 4px;
+    opacity: 1;
+}
+   
+#avbryt:active {
+    box-shadow: none;
+    transform: translateY(7px);
+    transition: 35ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#avbryt:hover:before {
+    transition: all .0s;
+    transform: translateY(100%);
+    opacity: 0;
+}
+   
+#avbryt i {
+    color: #313131;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-style: normal;
+    transition: all 2s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+   
+#avbryt:hover i {
+    transition: all .2s ease;
+    transform: translateY(0px);
+    opacity: 1;
+}
+   
+
+#avbryt:hover i:nth-child(1) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#avbryt:hover i:nth-child(2) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#avbryt:hover i:nth-child(3) {
+    transition-delay: calc(0.045s * 3);
+}
+
+#avbryt:hover i:nth-child(4) {
+    transition-delay: calc(0.045s * 4);
+}
+
+#avbryt:hover i:nth-child(5) {
+    transition-delay: calc(0.045s * 5);
+}
+
+#avbryt:hover i:nth-child(6) {
+    transition-delay: calc(0.045s * 6);
+}
+
+
+#slett {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    margin: 10px 0 10px 0;
+    padding: 0 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: hsl(0, 87%, 36%) 0px 7px 0px 0px;
+    background-color: #ff2121;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 31ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#slett:before {
+    content: attr(alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #313131;
+    letter-spacing: 4px;
+    opacity: 1;
+}
+   
+#slett:active {
+    box-shadow: none;
+    transform: translateY(7px);
+    transition: 35ms cubic-bezier(.5, .7, .4, 1);
+}
+   
+#slett:hover:before {
+    transition: all .0s;
+    transform: translateY(100%);
+    opacity: 0;
+}
+   
+#slett i {
+    color: #313131;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-style: normal;
+    transition: all 2s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+   
+#slett:hover i {
+    transition: all .2s ease;
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+#slett:hover i:nth-child(1) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#slett:hover i:nth-child(2) {
+    transition-delay: calc(0.045s * 1);
+}
+
+#slett:hover i:nth-child(3) {
+    transition-delay: calc(0.045s * 3);
+}
+
+#slett:hover i:nth-child(4) {
+    transition-delay: calc(0.045s * 4);
+}
+
+#slett:hover i:nth-child(5) {
+    transition-delay: calc(0.045s * 5);
+}
+
+.uploadOuter {
+    text-align: center;
+    padding: 20px;
+    strong {
+      padding: 0 10px
+    }
+  }
+  .dragBox {
+    width: 250px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    line-height: 95px;
+    color: #999;
+    border: 2px dashed #ccc;
+    display: inline-block;
+    transition: transform 0.3s;
+    input[type="file"] {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      top: 0;
+      left: 0;
+    }
+  }
+  .draging {
+    transform: scale(1.1);
+  }
+  #preview {
+    text-align: center;
+    img {
+      max-width: 100%
+    }
+  }

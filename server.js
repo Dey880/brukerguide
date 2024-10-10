@@ -200,30 +200,32 @@ res.render("nyGuide")
 });
 
 app.post("/nyGuide", uploads.any(), authenticateJWT, async (req, res) => {
-try {
-  const { tittel, tag, overskrift, beskrivelse } = req.body;
+  try {
+    const { tittel, tag, overskrift, beskrivelse } = req.body;
 
-  const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
-  const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
-  const bildeArray = req.files.map(file => file.path.replace("public", ""));
+    const overskriftArray = Array.isArray(overskrift) ? overskrift : [overskrift];
+    const beskrivelseArray = Array.isArray(beskrivelse) ? beskrivelse : [beskrivelse];
+    const bildeArray = req.files.map(file => file.path.replace("public", ""));
 
-  const authorEmail = req.user.email;
+    const authorEmail = req.user.email;
 
-  const newBrukerGuide = new BrukerGuide({
-    author: authorEmail,
-    tittel, 
-    tag,
-    overskrift: overskriftArray, 
-    beskrivelse: beskrivelseArray,
-    bilde: bildeArray, 
-  });
+    const newBrukerGuide = new BrukerGuide({
+      author: authorEmail,
+      tittel, 
+      tag,
+      overskrift: overskriftArray, 
+      beskrivelse: beskrivelseArray,
+      bilde: bildeArray, 
+    });
 
-  const result = await newBrukerGuide.save();
-  res.status(200).redirect("/guide");
-} catch (error) {
-  res.status(400).json({ message: error.message });
-}
+    const result = await newBrukerGuide.save();
+
+    res.status(200).redirect(`/guide/${result._id}`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
+
 
 app.get("/editGuide/:id", async (req, res) => {
   try {
@@ -261,6 +263,22 @@ app.post("/editGuide/:id", uploads.any(), async (req, res) => {
   } catch (error) {
     console.error("Error updating guide", error)
     res.status(400).json({ message: error.message })
+  }
+});
+
+app.delete("/deleteGuide/:id", authenticateJWT, async (req, res) => {
+  try {
+      const guideId = req.params.id.trim(); // Trim spaces
+      const deletedGuide = await BrukerGuide.findByIdAndDelete(guideId);
+      
+      if (!deletedGuide) {
+          return res.status(404).send("Guide not found");
+      }
+      
+      res.status(200).json({ message: "Guide deleted successfully", deletedGuide });
+  } catch (error) {
+      console.error("Error deleting guide", error);
+      res.status(500).json({ message: "Error deleting guide" });
   }
 });
 

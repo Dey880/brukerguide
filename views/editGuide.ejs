@@ -23,8 +23,24 @@
                             </div>
                             <div>
                                 <h3>Bilde</h3>
-                                <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple>
-                                <p id="prevImage">previous image:</p>
+                                <div class="uploadOuter">
+                                    <label for="uploadFile" class="btn btn-primary">Last opp bilde</label>
+                                    <strong>ELLER&nbsp;</strong>
+                                    <span class="dragBox" id="dropArea">
+                                        Dra et bilde hit
+                                        <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile" style="display: none;" />
+                                    </span>
+                                </div>
+                                <p id="prevImage">Forhåndsvis bilde:</p>
+                                <div id="preview"></div>
+                                
+
+                                <p id="prevImage">Forrige bilde:</p>
+                                <% if (guide.bilde && guide.bilde.length > 0) { %>
+                                  <img src="<%= guide.bilde[0] %>" alt="Previous image">
+                                <% } else { %>
+                                  <p>Ingen forrige bilder tilgjengelig</p>
+                                <% } %>                                
                             </div>
                         </div>
                     <% }) %>
@@ -46,13 +62,13 @@
             </form>
             <div id="edit-button">
                 <div class="flex">
-                    <button onclick="window.history.back();" id="new-guide-new" alt="Cancel">
-                        <i>C</i>
+                    <button onclick="window.history.back();" id="avbryt" alt="Avbryt">
                         <i>A</i>
-                        <i>N</i>
-                        <i>C</i>
-                    <i>E</i>
-                    <i>L</i>
+                        <i>V</i>
+                        <i>B</i>
+                        <i>R</i>
+                        <i>Y</i>
+                        <i>T</i>
                 </button>
             </div>
             <div class="flex">
@@ -69,42 +85,105 @@
                     <i>N</i>
                 </button>
             </div>
+            <div class="flex">
+                <button id="slett" alt="Slett" onclick="deleteGuide(' <%= guide._id %>')">
+                    <i>S</i>
+                    <i>L</i>
+                    <i>E</i>
+                    <i>T</i>
+                    <i>T</i>
+                </button>
+            </div>
         </div>
-            </a>
+    </a>
         </div>
     </div>
 </body>
 
 <script>
 
-    let imagePathsElement = document.getElementById("prevImage")
+"use strict";
+
+document.getElementById('dropArea').addEventListener('dragover', function(e) {
+    e.preventDefault();  // Prevent default to allow drop
+    e.target.classList.add('dragging');
+});
+
+document.getElementById('dropArea').addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    e.target.classList.remove('dragging');
+});
+
+document.getElementById('dropArea').addEventListener('drop', function(e) {
+    e.preventDefault();
+    e.target.classList.remove('dragging');
     
-    guide.bilde.forEach(path => {
-        let textNode = document.createTextNode(path + "");
-        imagePathsElement.appendChild(textNode);
+    var files = e.dataTransfer.files; // Get the dropped files
+    handleFiles(files);
+});
+
+function handleFiles(files) {
+    var file = files[0];  // Assuming a single file for now
+    if (file) {
+        var fileName = URL.createObjectURL(file);
+        var preview = document.getElementById("preview");
+        var previewImg = document.createElement("img");
+        previewImg.setAttribute("src", fileName);
+        preview.innerHTML = "";  // Clear previous preview
+        preview.appendChild(previewImg);
+        
+        // Optionally set the input file so that it gets submitted with the form
+        document.getElementById('uploadFile').files = files;
+    }
+}
+
+function dragNdrop(event) {
+    var fileName = URL.createObjectURL(event.target.files[0]);
+    var preview = document.getElementById("preview");
+    var previewImg = document.createElement("img");
+    previewImg.setAttribute("src", fileName);
+    preview.innerHTML = "";
+    preview.appendChild(previewImg);
+}
+
+function lagNySeksjon() {
+    
+    let newSection = document.getElementById("addNewSection");
+    newSection.insertAdjacentHTML("beforeend",  
+    `
+    <div name="section">
+                <h2>Seksjon</h2>
+                <div>
+                    <h3>Overskrift</h3>
+                    <input type="text" name="overskrift[]" id="" placeholder="Overskrift" required autocomplete="off" class="guide-input">
+                </div>
+                <div>
+                    <h3>Beskrivelse</h3>
+                    <textarea name="beskrivelse[]" id="" placeholder="Beskrivelse" required autocomplete="off" class="guide-beskrivelse"></textarea>
+                </div>
+                <div>
+                    <h3>Bilde</h3>
+                    <input type="file" name="bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex" multiple>
+                </div>
+            </div>
+    `)
+}
+
+async function deleteGuide(id) {
+    const response = await fetch(`/deleteGuide/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include' // Ensure cookies (like JWT) are sent with the request
     });
 
-    function lagNySeksjon() {
-        
-        let newSection = document.getElementById("addNewSection");
-        newSection.insertAdjacentHTML("beforeend",  
-        `
-        <div name="section">
-                    <h2>Seksjon</h2>
-                    <div>
-                        <h3>Overskrift</h3>
-                        <input type="text" name="overskrift[]" id="" placeholder="Overskrift" required autocomplete="off" class="guide-input">
-                    </div>
-                    <div>
-                        <h3>Beskrivelse</h3>
-                        <textarea name="beskrivelse[]" id="" placeholder="Beskrivelse" required autocomplete="off" class="guide-beskrivelse"></textarea>
-                    </div>
-                    <div>
-                        <h3>Bilde</h3>
-                        <input type="file" name="bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex" multiple>
-                    </div>
-                </div>
-        `)
+    if (response.ok) {
+        window.location.href =  "/dashboard"; // Reload to see the updated list
+    } else {
+        console.error('Failed to delete guide');
     }
+}
+
 
 </script>

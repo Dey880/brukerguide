@@ -3,44 +3,41 @@
 <body>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/">Hjem</a></li>
         </ul>
     </nav>
     <div class="main"> 
-        <h1>Dashboard</h1>
+        <h1>Dashbord</h1>
         <div class="main">
-            <h1>Welcome, <%= user.email %>!</h1>
-            <div class="guides-list">
-                <h2 class="guide-h2">Your Guides</h2>
+            <h1>Velkommen, <%= user.email %>!</h1>
+            <div class="main-content">
                 <% if (guides.length > 0) { %>
                     <% guides.forEach(guide => { %>
-                        <div class="guide-item">
-                            <h3><a href="/guide/<%= guide._id %>"><%= guide.tittel %></a></h3>
-                            <p><strong>Tags:</strong> <%= guide.tag %></p>
-                            <p><strong>Description:</strong> <%= guide.beskrivelse.join(', ') %></p>
-                        </div>
+                        <a href="/guide/<%= guide._id %>">
+                            <div class="guide-link">
+                                <h2>Tittel: <%= guide.tittel %></h2>
+                                <h2>Forfatter: <%= guide.author %></h2>
+                                <h2>Tags: <%= guide.tag %>
+                            </div>
+                        </a>
                     <% }); %>
                 <% } else { %>
-                    <p>You have not created any guides yet.</p>
+                    <p>Ingen guider funnet.</p>
                 <% } %>
             </div>
             <a href="/nyGuide" id="nostyle">
-                <button id="new-guide" alt="CREATE NEW GUIDE">
-                    <i>C</i>
-                    <i>R</i>
-                    <i>E</i>
+                <button id="new-guide" alt="Lag ny guide">
+                    <i>L</i>
                     <i>A</i>
-                    <i>T</i>
-                    <i>E</i>
+                    <i>G</i>
                     <i>&nbsp;</i>
                     <i>N</i>
-                    <i>E</i>
-                    <i>W</i>
+                    <i>Y</i>
                     <i>&nbsp;</i>
                     <i>G</i>
                     <i>U</i>
                     <i>I</i>
-                    <i>D</i>
+                    <i>S</i>
                     <i>E</i>
                 </button>
             </a>

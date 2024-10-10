@@ -23,24 +23,7 @@
                             </div>
                             <div>
                                 <h3>Bilde</h3>
-                                <div class="uploadOuter">
-                                    <label for="uploadFile" class="btn btn-primary">Last opp bilde</label>
-                                    <strong>ELLER&nbsp;</strong>
-                                    <span class="dragBox" id="dropArea">
-                                        Dra et bilde hit
-                                        <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile" style="display: none;" />
-                                    </span>
-                                </div>
-                                <p id="prevImage">Forhåndsvis bilde:</p>
-                                <div id="preview"></div>
-                                
-
-                                <p id="prevImage">Forrige bilde:</p>
-                                <% if (guide.bilde && guide.bilde.length > 0) { %>
-                                  <img src="<%= guide.bilde[0] %>" alt="Previous image">
-                                <% } else { %>
-                                  <p>Ingen forrige bilder tilgjengelig</p>
-                                <% } %>                                
+                                <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile"/>                            
                             </div>
                         </div>
                     <% }) %>
@@ -102,50 +85,6 @@
 
 <script>
 
-"use strict";
-
-document.getElementById('dropArea').addEventListener('dragover', function(e) {
-    e.preventDefault();  // Prevent default to allow drop
-    e.target.classList.add('dragging');
-});
-
-document.getElementById('dropArea').addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    e.target.classList.remove('dragging');
-});
-
-document.getElementById('dropArea').addEventListener('drop', function(e) {
-    e.preventDefault();
-    e.target.classList.remove('dragging');
-    
-    var files = e.dataTransfer.files; // Get the dropped files
-    handleFiles(files);
-});
-
-function handleFiles(files) {
-    var file = files[0];  // Assuming a single file for now
-    if (file) {
-        var fileName = URL.createObjectURL(file);
-        var preview = document.getElementById("preview");
-        var previewImg = document.createElement("img");
-        previewImg.setAttribute("src", fileName);
-        preview.innerHTML = "";  // Clear previous preview
-        preview.appendChild(previewImg);
-        
-        // Optionally set the input file so that it gets submitted with the form
-        document.getElementById('uploadFile').files = files;
-    }
-}
-
-function dragNdrop(event) {
-    var fileName = URL.createObjectURL(event.target.files[0]);
-    var preview = document.getElementById("preview");
-    var previewImg = document.createElement("img");
-    previewImg.setAttribute("src", fileName);
-    preview.innerHTML = "";
-    preview.appendChild(previewImg);
-}
-
 function lagNySeksjon() {
     
     let newSection = document.getElementById("addNewSection");
@@ -163,9 +102,9 @@ function lagNySeksjon() {
                 </div>
                 <div>
                     <h3>Bilde</h3>
-                    <input type="file" name="bilde" id="" autocomplete="off" accept="image/png image/jpg image/jpeg" class="flex" multiple>
+                    <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile"/>
                 </div>
-            </div>
+
     `)
 }
 

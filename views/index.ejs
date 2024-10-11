@@ -1,5 +1,16 @@
 <%- include("./partials/head") %>
 <!-- HELP -->
+ <head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const params = new URLSearchParams(window.location.search);
+          if (params.has('error')) {
+            alert(params.get('error'));
+            window.location.href = "/login";
+          }
+        });
+      </script>
+ </head>
 <html>
     <body id="body-index">
         <%- include("./partials/nav") %>

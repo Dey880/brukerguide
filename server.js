@@ -71,13 +71,13 @@ const authenticateJWT = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
-        return res.sendStatus(403);
+        return res.redirect('/?error=You need to log in to view this content');
       }
       req.user = user;
       next();
     });
   } else {
-    res.sendStatus(401);
+    res.redirect('/?error=You need to log in to view this content');
   }
 };
 

@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 
 // HELP
 mongoose
-.connect("mongodb://127.0.0.1:27017/helpdesk").then(() => {}).catch((error) => {
+.connect("mongodb://localhost:27017/helpdesk").then(() => {}).catch((error) => {
   console.log("something happened", error);
 })
 

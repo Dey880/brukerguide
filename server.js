@@ -3,58 +3,21 @@ const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const multer = require("multer");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
-// HELP
-mongoose
-.connect("mongodb://localhost:27017/helpdesk").then(() => {}).catch((error) => {
-  console.log("something happened", error);
-})
+// Import models and middleware
+const User = require("./models/user");
+const BrukerGuide = require("./models/brukerGuide");
+const authenticateJWT = require("./middleware/auth");
+const uploads = require("./utils/upload");
 
-
-const diskStorage = multer.diskStorage({
-destination: function(req, file, cb) {
-  cb(null, "./public/uploads")
-},
-filename: function(req, file, cb) {
-  const ext = path.extname(file.originalname);
-  const fileName = file.originalname
-  cb(null, fileName)
-
-}
-})
-
-
-const uploads = multer({
-storage: diskStorage,
-fileFilter: function (req, file, cb) {
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-  if (!allowedTypes.includes(file.mimetype)) {
-    return cb(new Error("Only .png .jpg and .jpeg format allowed"));
-  }
-  cb(null, true);
-}
-});
-
-const userschema =  new mongoose.Schema({
-email: String,
-password: String
-});
-
-const brukerSchema = new mongoose.Schema({
-author: String,
-tittel: String,
-tag: String,
-overskrift: Array,
-beskrivelse: Array,
-bilde: Array
-})
-
-const BrukerGuide = mongoose.model("BrukerGuide", brukerSchema)
-const User = mongoose.model("User", userschema);
+mongoose.connect("mongodb://localhost:27017/helpdesk")
+  .then(() => {})
+  .catch((error) => {
+    console.log("something happened", error);
+  });
 
 const saltRounds = 10;
 
@@ -64,22 +27,6 @@ app.use(express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-const authenticateJWT = (req, res, next) => {
-  const token = req.cookies.jwt;
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.redirect('/?error=You need to log in to view this content');
-      }
-      req.user = user;
-      next();
-    });
-  } else {
-    res.redirect('/?error=You need to log in to view this content');
-  }
-};
 
 app.get("/", async (req, res) => {
   try {

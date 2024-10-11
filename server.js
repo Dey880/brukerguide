@@ -214,7 +214,7 @@ app.post("/editGuide/:id", uploads.any(), async (req, res) => {
 
 app.delete("/deleteGuide/:id", authenticateJWT, async (req, res) => {
   try {
-      const guideId = req.params.id.trim(); // Trim spaces
+      const guideId = req.params.id.trim();
       const deletedGuide = await BrukerGuide.findByIdAndDelete(guideId);
       
       if (!deletedGuide) {

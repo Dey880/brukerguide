@@ -7,7 +7,6 @@ const path = require("path");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
-// Import models and middleware
 const User = require("./models/user");
 const BrukerGuide = require("./models/brukerGuide");
 const authenticateJWT = require("./middleware/auth");

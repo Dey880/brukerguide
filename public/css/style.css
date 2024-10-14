@@ -1161,3 +1161,12 @@ strong {
     height: 100%;
     object-fit: cover;
 }
+
+#acc-info {
+    margin: 20px;
+    padding: 10px;
+    color: var(--primary-color);
+    background-color: var(--dark-color);
+    border-radius: 15px;
+    border: var(--black-color) 2px solid;
+}

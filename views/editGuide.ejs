@@ -23,9 +23,16 @@
                             </div>
                             <div>
                                 <h3>Bilde</h3>
-                                <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile"/>                            
+                                <div id="drop-area">
+                                    <form class="my-form">
+                                      <p>Upload files by dragging & dropping, or select them</p>
+                                      <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+                                      <label class="button" for="fileElem">Select some files</label>
+                                    </form>
+                                    <div id="gallery"></div>
+                                </div>
                             </div>
-                        </div>
+                        </div>                          
                     <% }) %>
                 </div>
                 <div style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -84,6 +91,68 @@
 </body>
 
 <script>
+      // Drag and Drop functionality remains the same
+  let dropArea = document.getElementById("drop-area");
+
+// Prevent default behaviors
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+  dropArea.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+// Highlight area when file is dragged over it
+["dragenter", "dragover"].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => dropArea.classList.add("highlight"), false);
+});
+
+["dragleave", "drop"].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => dropArea.classList.remove("highlight"), false);
+});
+
+// Handle dropped files
+dropArea.addEventListener("drop", handleDrop, false);
+
+function handleDrop(e) {
+  let dt = e.dataTransfer;
+  let files = dt.files;
+
+  handleFiles(files);
+}
+
+function handleFiles(files) {
+  files = [...files];
+  files.forEach(uploadFile);
+  files.forEach(previewFile);
+}
+
+function previewFile(file) {
+  let reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = function () {
+    let img = document.createElement("img");
+    img.src = reader.result;
+    img.classList.add("uploaded-image");
+    document.getElementById("gallery").appendChild(img);
+  };
+}
+
+function uploadFile(file) {
+  let url = "/nyGuide"; // Your upload URL
+  let formData = new FormData();
+  formData.append("file", file);
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(() => console.error("Upload failed"));
+}
 
 function lagNySeksjon() {
     

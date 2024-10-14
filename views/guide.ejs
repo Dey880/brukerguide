@@ -1,5 +1,4 @@
 <%- include("./partials/head") %>
- <!-- HELP -->
 <body>
     <div class="main-guide"> 
         <div class="grid-container">
@@ -41,7 +40,9 @@
                                     <%= guide.tag %>
                                 </p>
                                 <% guide.overskrift.forEach((heading, index) => { %>
-                                    <h3 class="guide-h3" id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3>
+                                    <strong>
+                                        <h3 class="guide-h3" id="guide-<%= guide._id %>-<%= index %>"><%= heading %></h3>
+                                    </strong>
                                     <p class="guide-p"><%= guide.beskrivelse[index] %></p>
                                     <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>

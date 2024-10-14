@@ -78,6 +78,7 @@ User.findOne({email:brukernavn})
   });
 })
 .catch((error) => {
+  console.log(error)
   res.redirect('/login?error=Ikke gyldig passord, prøv igjen');
 });
 

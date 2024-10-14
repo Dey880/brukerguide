@@ -25,24 +25,24 @@
                                 <h3>Bilde</h3>
                                 <input type="file" name="bilde" accept="image/png image/jpg image/jpeg" class="flex" multiple id="uploadFile"/>
                             </div>
-                            <div id="prev-img">
-                                <h3>Previously uploaded images</h3>
-                                <div class="img-gallery">
-                                    <% if (guide.bilde && guide.bilde.length > 0) { %>
-                                        <% guide.bilde.forEach(function(image) { %>
-                                        <div class="img-wrapper">
-                                            <img src="<%= image %>" alt="Guide Image" class="prev-uploaded-image">
-                                        </div>
-                                    <% }) %>
-                                <% } else { %>
-                                    <p>Ingen bilder funnet</p>
-                                <% } %>
-                                </div>
-                            </div>
                         </div>                          
                     <% }) %>
                 </div>
-                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div id="prev-img">
+                        <h3>Previously uploaded images</h3>
+                        <div class="img-gallery">
+                            <% if (guide.bilde && guide.bilde.length > 0) { %>
+                                <% guide.bilde.forEach(function(image) { %>
+                                <div class="img-wrapper">
+                                    <img src="<%= image %>" alt="Guide Image" class="prev-uploaded-image">
+                                </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p>Ingen bilder funnet</p>
+                            <% } %>
+                        </div>
+                    </div>
+                <div style="display: flex; flex-direction: row; justify-content: center;">
                     <div class="flex">
                         <button type="submit" id="new-guide-new" alt="Send Inn">
                             <i>S</i>

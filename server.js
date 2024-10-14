@@ -112,6 +112,25 @@ if(password == repeatPassword){
 }
 });
 
+app.get("/account", authenticateJWT, (req, res) => {
+  res.render("account", { user: req.user })
+})
+
+app.post("/deleteUser", authenticateJWT, async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.user.userId);
+    if (!deletedUser) {
+      res.status(404).send("Bruker ikke funnet");
+    }
+
+    res.clearCookie("jwt");
+    res.status(200).redirect("/account");
+  } catch (error) {
+    console.error("Error deleting user", error);
+    res.status(500).send("Feil ved sletting av bruker")
+  }
+});
+
 app.get("/dashboard", authenticateJWT, async (req, res) => {
   try {
     const guides = await BrukerGuide.find({ author: req.user.email});

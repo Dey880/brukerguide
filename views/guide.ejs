@@ -10,7 +10,7 @@
                             <% guides.forEach(guide => { %>
                                 <% if (guide.overskrift && guide.overskrift.length > 0) { %>
                                     <% guide.overskrift.forEach((heading, index) => { %>
-                                        <a href="#guide-<%= guide._id %>-<%= index %>"><strong><%= heading %></strong></a><br>
+                                        <a href="#guide-<%= guide._id %>-<%= index %>"><strong><%= heading %></strong></a>
                                         <% }); %>
                                     <% } else { %>
                                         <p>No headings found</p>

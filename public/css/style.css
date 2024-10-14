@@ -825,7 +825,11 @@ textarea {
     justify-content: space-evenly;
 }
 
-.guide-h2, .guide-p, .guide-h3 {
+.guide-h2, .guide-p {
+    color: var(--primary-color);
+}
+
+.guide-h3 {
     color: var(--link-color);
 }
 

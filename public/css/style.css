@@ -826,7 +826,7 @@ textarea {
 }
 
 .guide-h2, .guide-p, .guide-h3 {
-    color: var(--primary-color);
+    color: var(--link-color);
 }
 
 strong {

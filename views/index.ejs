@@ -1,5 +1,4 @@
 <%- include("./partials/head") %>
-<!-- HELP -->
  <head>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -16,7 +15,7 @@
         <%- include("./partials/nav") %>
         <div class="main">
                 <div class="search-div">
-                    <form action="/" method="GET" class="flex">  <!-- Form to submit the search query -->
+                    <form action="/" method="GET" class="flex">
                         <div id="search-type">
                             <label>
                                 <input type="radio" name="searchType" value="tag" <%= searchType === "tag" ? "checked" : "" %>> Tag

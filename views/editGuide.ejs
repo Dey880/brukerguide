@@ -91,10 +91,8 @@
 </body>
 
 <script>
-      // Drag and Drop functionality remains the same
   let dropArea = document.getElementById("drop-area");
 
-// Prevent default behaviors
 ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
   dropArea.addEventListener(eventName, preventDefaults, false);
 });
@@ -104,7 +102,6 @@ function preventDefaults(e) {
   e.stopPropagation();
 }
 
-// Highlight area when file is dragged over it
 ["dragenter", "dragover"].forEach(eventName => {
   dropArea.addEventListener(eventName, () => dropArea.classList.add("highlight"), false);
 });
@@ -113,7 +110,6 @@ function preventDefaults(e) {
   dropArea.addEventListener(eventName, () => dropArea.classList.remove("highlight"), false);
 });
 
-// Handle dropped files
 dropArea.addEventListener("drop", handleDrop, false);
 
 function handleDrop(e) {
@@ -141,7 +137,7 @@ function previewFile(file) {
 }
 
 function uploadFile(file) {
-  let url = "/nyGuide"; // Your upload URL
+  let url = "/nyGuide";
   let formData = new FormData();
   formData.append("file", file);
 
@@ -183,11 +179,11 @@ async function deleteGuide(id) {
         headers: {
             'Content-Type': 'application/json',
         },
-        credentials: 'include' // Ensure cookies (like JWT) are sent with the request
+        credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href =  "/dashboard"; // Reload to see the updated list
+        window.location.href =  "/dashboard";
     } else {
         console.error('Failed to delete guide');
     }

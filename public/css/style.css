@@ -15,7 +15,7 @@ body {
     overflow-y: hidden;
 }
 
-body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex, #search-type, .guide-item, .edit-guide, #edit-guide, #edit-button {
+body, #side, #side-links, #top, #bottom, .main, nav, ul, .main-content, #login-content, #login-main, #login-buttons, #new-guide, #ny-guide-form, .flex, #search-type, .guide-item, .edit-guide, #edit-guide, #edit-button, .img-gallery {
     display: flex;
 }
 
@@ -1146,19 +1146,18 @@ strong {
     transition-delay: calc(0.045s * 12);
 }
 
-#drop-area {
-    border: 2px dashed #ccc;
-    padding: 0 0 10px 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
+.img-gallery {
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.highlight {
-    border-color: purple;
-}
-
-.uploaded-image {
+.img-wrapper {
     width: 150px;
-    margin-top: 10px;
+    height: 150px;
+}
+
+.prev-uploaded-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

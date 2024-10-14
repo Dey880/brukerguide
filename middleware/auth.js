@@ -6,13 +6,13 @@ const authenticateJWT = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
-        return res.redirect('/?error=You need to log in to view this content');
+        return res.redirect('/?error=Du må logge inn for å se dette innholdet!');
       }
       req.user = user;
       next();
     });
   } else {
-    res.redirect('/?error=You need to log in to view this content');
+    res.redirect('/?error=Du må logge inn for å se dette innholdet!');
   }
 };
 

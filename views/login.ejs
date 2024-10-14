@@ -1,4 +1,13 @@
 <html class="noscroll">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('error')) {
+            alert(params.get('error'));
+            window.location.href = "/login";
+            }
+        });
+    </script>
     <%- include("./partials/head") %>
     <body id="body-login">
         <%- include("./partials/nav") %>

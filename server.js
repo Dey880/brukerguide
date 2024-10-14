@@ -59,7 +59,7 @@ const { brukernavn, password } = req.body;
 User.findOne({email:brukernavn})
   .then((user) => {
     if (!user) {
-      return res.status(400).json({ message: "User not found"})
+      return res.redirect('/login?error=Bruker ikke funnet');
     }
 
   bcrypt.compare(password, user.password).then((result) => {
@@ -73,12 +73,12 @@ User.findOne({email:brukernavn})
       });
       return res.status(200).redirect("/dashboard");
     } else {
-      res.status(401).json({ message: "Invalid password" });
+      res.redirect('/login?error= Ugyldig passord, prøv igjen');
     }
   });
 })
 .catch((error) => {
-  res.status(500).json({message:'Ikke gyldig passord, prøv igjen.'});
+  res.redirect('/login?error=Ikke gyldig passord, prøv igjen');
 });
 
 });
@@ -108,7 +108,7 @@ if(password == repeatPassword){
     }
   });
 } else {
-  res.status(500).json({message:"Passord stemmer ikke overens"})
+  res.redirect('/createuser?error=Passord stemmer ikke overens');
 }
 });
 
@@ -120,6 +120,7 @@ app.post("/deleteUser", authenticateJWT, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.user.userId);
     if (!deletedUser) {
+      res.redirect("/")
       res.status(404).send("Bruker ikke funnet");
     }
 

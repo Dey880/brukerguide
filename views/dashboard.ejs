@@ -16,7 +16,7 @@
                     <% guides.forEach(guide => { %>
                         <a href="/guide/<%= guide._id %>">
                             <div class="guide-link">
-                                <h2>Tittel: <%= guide.tittel %></h2>
+                                <h2><%= guide.tittel %></h2>
                                 <h2>Forfatter: <%= guide.author %></h2>
                                 <h2>Tags: <%= guide.tag %>
                             </div>

@@ -7,8 +7,11 @@
     --black-color: #0f0f0f;
 }
 
-body {
+html {
     scroll-behavior: smooth;
+}
+
+body {
     font-family: 'Times New Roman', Times, serif;
 }
 

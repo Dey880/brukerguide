@@ -7,8 +7,9 @@
     --black-color: #0f0f0f;
 }
 
-html {
-    scroll-behavior: smooth;
+*, html {
+
+    scroll-behavior: smooth !important;
 }
 
 body {

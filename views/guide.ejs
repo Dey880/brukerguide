@@ -47,7 +47,7 @@
                                     <img src="<%= guide.bilde[index] %>" alt="Guide Image" class="guide-image">
                                 <% }); %>
                             </div>
-                            <% if (user && guide.author === user.userId || user && user.userId == process.env.ADMIN_ID) { %>
+                            <% if (user && guide.author === user.email || user && user.userId == process.env.ADMIN_ID) { %>
                                 <a href="/editGuide/<%= guide._id %>"  id="nostyle">
                                     <button id="ny-seksjon" alt="Rediger">
                                         <i>R</i>

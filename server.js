@@ -119,17 +119,16 @@ app.get("/account", authenticateJWT, (req, res) => {
 
 app.post("/deleteUser", authenticateJWT, async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.user.userId);
+    const deletedUser = await User.findOneAndDelete({ _id: req.user.userId });
     if (!deletedUser) {
-      res.redirect("/")
-      res.status(404).send("Bruker ikke funnet");
+      return res.status(404).send("Bruker ikke funnet");
     }
 
     res.clearCookie("jwt");
     res.status(200).redirect("/account");
   } catch (error) {
     console.error("Error deleting user", error);
-    res.status(500).send("Feil ved sletting av bruker")
+    res.status(500).send("Feil ved sletting av bruker");
   }
 });
 

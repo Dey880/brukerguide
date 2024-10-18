@@ -47,8 +47,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-
-
 app.get("/login", (req, res) => {
 res.render("login");
 });
@@ -159,8 +157,6 @@ app.get("/guide/:id?", authenticateJWT, async (req, res) => {
   }
 });
 
-
-
 app.get("/nyGuide", (req, res) => {
 res.render("nyGuide")
 });
@@ -191,7 +187,6 @@ app.post("/nyGuide", uploads.any(), authenticateJWT, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 
 app.get("/editGuide/:id", async (req, res) => {
   try {

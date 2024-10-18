@@ -1,0 +1,44 @@
+name: Deploy Helpdesk to VM
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy: 
+    name: Deploy to Self-hosted Runner
+    runs-on: self-hosted
+
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Pull latest changes
+        run: git pull --no-edit origin main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        working-directory: ./
+        run: npm install
+
+      - name: Reload with PM2
+        run: |
+          echo "Reloading server"
+          pm2 reload server --update-env
+
+      - name: Verify PM2 status
+        run: |
+          pm2 status
+          if pm2 list | grep -qE "errored|stopped"; then
+            echo "One or more processes has errored or stopped"
+            exit 1
+          fi
+
+
+

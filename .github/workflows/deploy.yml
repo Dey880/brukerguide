@@ -16,10 +16,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Pull latest changes
-        run: cd /var/www/brukerguide && git pull --no-edit origin main
+        run: |
+          cd /var/www/brukerguide
+          git pull --no-edit origin main
 
       - name: Verify Pull
-        run: cd /var/www/helpdesk && git log -1 --oneline
+        run: |
+          cd /var/www/helpdesk
+          git log -1 --oneline
+
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -28,7 +33,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./
-        run: cd /var/www/brukerguide && npm install
+        run: |
+          cd /var/www/brukerguide
+          npm install
 
       - name: Reload with PM2
         run: |

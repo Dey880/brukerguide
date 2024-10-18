@@ -22,7 +22,7 @@ jobs:
 
       - name: Verify Pull
         run: |
-          cd /var/www/helpdesk
+          cd /var/www/brukerguide
           git log -1 --oneline
 
 

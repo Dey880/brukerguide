@@ -18,6 +18,9 @@ jobs:
       - name: Pull latest changes
         run: cd /var/www/brukerguide && git pull --no-edit origin main
 
+      - name: Verify Pull
+        run: cd /var/www/helpdesk && git log -1 --oneline
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -25,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./
-        run: npm install
+        run: cd /var/www/brukerguide && npm install
 
       - name: Reload with PM2
         run: |
